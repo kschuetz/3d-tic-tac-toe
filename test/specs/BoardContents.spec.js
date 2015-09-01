@@ -1,6 +1,6 @@
 
 const _ = require('lodash'),
-      BoardContents = require('../../src/app/models/BoardContents');
+      BoardContents = require('../../src/app/core/BoardContents');
 
 
 function generateRandom(turnsTaken) {
