@@ -32,7 +32,7 @@ function SolutionMap() {
 }
 
 
-// this is used heavily when evalutating the board so it should be fast
+// this is used heavily when evaluating the board so it should be fast
 SolutionMap.prototype.getSolutionsForSquare = function(squareIndex) {
     return this._squares[squareIndex];
 };

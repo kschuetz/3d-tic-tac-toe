@@ -33,12 +33,12 @@ const
     OPiece = require('../components/OPiece.react'),
     Plane = require('../components/Plane.react'),
     GameBoard = require('../components/GameBoard.react'),
-    PhysicalBoardState = require('../models/PhysicalBoardState'),
-    solutionMap = require('../models/solutionMap'),
-    GameState = require('../models/GameState'),
+    PhysicalBoardState = require('../core/PhysicalBoardState'),
+    solutionMap = require('../core/solutionMap'),
+    GameState = require('../core/GameState'),
     computerPlayer = require('../core/computerPlayer'),
     generateSquarePreferences = require('../core/generateSquarePreferences'),
-    BoardContents = require('../models/BoardContents');
+    BoardContents = require('../core/BoardContents');
 
 
 function printInfo() {

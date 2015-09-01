@@ -26,6 +26,8 @@
 /*jshint bitwise: false*/
 
 
+const _ = require('lodash');
+
 function BoardContents(data) {
     this.data = data || new Int32Array(4);
 }
@@ -54,7 +56,7 @@ BoardContents.prototype.setPlayerAt = function(squareIndex, player) {
     let data = this.data;
     if(squareIndex < 32) {
         let occ = data[0],
-            p = data[1],
+            p = data[2],
             bit = squareIndex,
             mask = (1 << bit);
 
@@ -138,5 +140,42 @@ BoardContents.prototype.getDebugString = function() {
 
 
 BoardContents.emptyBoard = new BoardContents();
+
+BoardContents.readFromString = function(s) {
+    let result = new BoardContents(),
+        len = (s && s.length) || 0;
+    if(len > 64) {
+        len = 64;
+    }
+    for(let i = 0; i < len; i += 1) {
+        let c = s.charAt(i);
+        if(c === 'x' || c === 'X') {
+            result = result.setPlayerAt(i, 1);
+        } else if (c === 'o' || c === 'O') {
+            result = result.setPlayerAt(i, -1);
+        }
+    }
+
+    return result;
+};
+
+BoardContents.generateRandom = function(turnsTaken) {
+    let turns = _.shuffle(_.range(0, 63)),
+        result = new BoardContents();
+    if(turnsTaken > 32) {
+        turnsTaken = 32;
+    }
+    let player = 1,
+        i = 0;
+    while(turnsTaken > 0) {
+        result = result.setPlayerAt(turns[i], player);
+        turnsTaken -= 1;
+        i += 1;
+        player = -player;
+    }
+
+    return result;
+
+};
 
 module.exports = BoardContents;

@@ -28,12 +28,32 @@ const
 const devConfig = require('./config/dev'),
       distConfig = require('./config/dist');
 
+
+
 const browserSyncOptions = {
     server: {
         baseDir: './'
     },
     port:  7654
 };
+
+const testRunnerConfig = {
+    outputJsDir:        './test/build',
+    entryFile:          './test/specs/**/*.js',
+    outputJsFile:       'bundle.js',
+    browserifyOptions: {
+        debug: true
+    },
+    browserSyncOptions: {
+        server: {
+            baseDir: './'
+        },
+        port:  7655,
+        startPath: 'test/runner.html'
+    }
+};
+
+
 
 const browserifyBaseOptions = {
     paths: ['./src/app']
@@ -52,6 +72,7 @@ const taskNames = {
     html: 'html',
     vendor:  'vendor',
     bundle:  'bundle',
+    compile: 'compile',
     copyAssets:   'copy-assets',
     serve: 'serve'
 };
@@ -250,6 +271,18 @@ function makeTasks(groupName, config) {
     );
 }
 
+// tests:
+// run test-serve in one terminal, and run test-compile in another window whenever anything changes,
+// then hit refresh on the browser.
+function makeTestRunnerTasks(groupName, config) {
+    const withPrefix = makePrefixer(groupName + '-'),
+          names = _.mapValues(taskNames, withPrefix);
+
+    gulp.task(names.compile, bundleTask(config));
+    gulp.task(names.serve, serveTask(config));
+}
+
 
 makeTasks('dev', devConfig);
 makeTasks('dist', distConfig);
+makeTestRunnerTasks('test', testRunnerConfig);

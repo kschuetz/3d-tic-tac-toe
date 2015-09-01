@@ -73,7 +73,7 @@ GameState.prototype.placePiece = function(squareIndex, player) {
         balance += player * newState.score(player);
         balance += opponent * newState.score(opponent);
 
-        if(newState.isWin(player)) {
+        if(newState.isWinFor(player)) {
             winner = player;
         }
 
@@ -107,6 +107,22 @@ GameState.prototype.getOccupiedSquares = function() {
             result.push(i);
         }
     }
+    return result;
+};
+
+GameState.prototype.getWinningSquares = function() {
+    if(this._winningSquares) {
+        return this._winningSquares;
+    }
+    let result = Immutable.Set();
+    this.solutionScores.forEach((ss, solutionIndex) => {
+        if(ss.isWin) {
+            let solution = solutionMap.solutions.get(solutionIndex),
+                squares = solution.squares;
+            squares.forEach(s => result = result.add(s));
+        }
+    });
+    this._winningSquares = result;
     return result;
 };
 

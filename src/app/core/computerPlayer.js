@@ -29,10 +29,12 @@ const
     generateSquarePreferences = require('./generateSquarePreferences'),
     PrincipalVariation = require('./PrincipalVariation'),
     MoveComputation = require('./MoveComputation'),
-    GameState = require('../models/GameState'),
+    GameState = require('./GameState'),
     Ply = require('./Ply');
 
 const v1 = Ply;
+
+const defaultStepsPerTick = 20000;
 
 
 function MoveResponse(props) {
@@ -43,6 +45,7 @@ function MoveResponse(props) {
 
 
 function ComputerPlayer(props) {
+    this.stepsPerTick = props.stepsPerTick || defaultStepsPerTick;
     this.playerIndex = props.playerIndex || -1;
     this.squarePrefs = generateSquarePreferences();
     //this.level = props.level || 1;
@@ -95,7 +98,7 @@ ComputerPlayer.prototype.makeMove = function(gameState, asPlayer) {
         });
 
         let step = function() {
-            computation.execute(20000);
+            computation.execute(self.stepsPerTick);
             if(interrupted) {
                 computation.done = true;
             }
@@ -178,10 +181,15 @@ function test2() {
 
     function printGameState(gameState) {
         console.log(gameState.contents.getDebugString());
+        if(gameState.gameOver) {
+            let winningSquares = gameState.getWinningSquares();
+            console.log(winningSquares.toJS());
+        }
     }
 
     function turn(xToMove, state) {
         let player = xToMove ? player1 : player2;
+        console.log(player);
         if(state.gameOver) {
             console.log('game over');
             printGameState(state);

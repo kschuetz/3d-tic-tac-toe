@@ -44,13 +44,15 @@ const stalemate = {
         return stalemateValue;
     },
 
-    isWin() {
+    isWinFor() {
         return false;
     },
 
     canWin() {
         return false;
-    }
+    },
+
+    isWin:  false
 };
 
 function isThisPlayer(playerIndex) {
@@ -69,8 +71,9 @@ Win.prototype.score = function(playerIndex) {
     return playerIndex === this.playerIndex ? winValue : 0;
 };
 
-Win.prototype.isWin = isThisPlayer;
+Win.prototype.isWinFor = isThisPlayer;
 Win.prototype.canWin = isThisPlayer;
+Win.prototype.isWin = true;
 
 function Combo(playerIndex, score, nextState) {
     this.playerIndex = playerIndex;
@@ -90,10 +93,11 @@ Combo.prototype.score = function(playerIndex) {
     return playerIndex === this.playerIndex ? this._score : 0;
 };
 
-Combo.prototype.isWin = function() {
+Combo.prototype.isWinFor = function() {
     return false;
 };
 
+Combo.prototype.isWin = false;
 Combo.prototype.canWin = isThisPlayer;
 
 const
@@ -119,13 +123,15 @@ const empty = {
         return emptyValue;
     },
 
-    isWin() {
+    isWinFor() {
         return false;
     },
 
     canWin() {
         return true;
-    }
+    },
+
+    isWin:   false
 };
 
 
