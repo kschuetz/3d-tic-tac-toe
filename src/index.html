@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>sandbox</title>
+
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <!-- @if MODE='dev' -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.js" ></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js" ></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/immutable/3.7.4/immutable.js" ></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js" ></script>
+    <!-- script src="//fb.me/react-0.13.3.js"></script -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.js" ></script>
+    <!-- @endif -->
+    <!-- @if MODE='production' -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" ></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js" ></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/immutable/3.7.4/immutable.min.js" ></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.min.js" ></script>
+    <!--script src="//fb.me/react-0.13.3.min.js"></script-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js" ></script>
+    <!-- @endif -->
+    <script src="js/vendor-bundle.js"></script>
+    <script src="js/app-bundle.js"></script>
+
+</head>
+<body>
+<svg id="sandbox-container" width="800px" height="800px"></svg>
+</body>
+</html>
