@@ -30,18 +30,13 @@ const
     PrincipalVariation = require('./PrincipalVariation'),
     MoveComputation = require('./MoveComputation'),
     GameState = require('./GameState'),
-    Ply = require('./Ply');
+    Ply = require('./Ply'),
+    MoveResponse = require('./MoveResponse');
 
-const v1 = Ply;
 
 const defaultStepsPerTick = 20000;
 
 
-function MoveResponse(props) {
-    this.square = props.square;
-    this.interrupted = !!props.interrupted;
-    this.timeTaken = props.timeTaken;
-}
 
 
 function ComputerPlayer(props) {
@@ -147,7 +142,7 @@ function test1() {
     console.log(startState.getOccupiedSquares());
 
     let foo = new MoveComputation({
-        plyClass:  v1,
+        plyClass:  Ply,
         maxDepth: 4,
         player:   1,
         gameState:  startState,
