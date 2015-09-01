@@ -23,8 +23,41 @@
  */
 
 
-function Game() {
+const
+    _ = require('lodash'),
+    GameState = require('./GameState');
 
+function Game(props) {
+    this.player1 = props.player1;
+    this.player2 = props.player2;
+    this.onStateChange = props.onStateChange;
 }
 
 
+Game.prototype.loop = function() {
+    const player1 = this.player1,
+          player2 = this.player2,
+          onStateChange = this.onStateChange || _.noop;
+    function turn(xToMove, state) {
+        onStateChange(state);
+
+        let player = xToMove ? player1 : player2;
+
+        if(state.gameOver) {
+            return;
+        }
+
+        player.makeMove(state).result.then(resp => {
+            let newState = state.placePiece(resp.square, player.playerIndex);
+
+            setTimeout(() => {
+                turn(!xToMove, newState);
+            });
+        });
+    }
+
+    turn(false, GameState.defaultGameState);
+
+};
+
+module.exports = Game;
