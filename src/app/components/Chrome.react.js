@@ -48,6 +48,26 @@ const ChromeBackground = React.createClass({
 
 });
 
+const TurnIndicator = React.createClass({
+    getDefaultProps() {
+        return {
+            stemThickness: 1,
+            scale: 1
+        };
+    },
+    render() {
+        let s = this.props.scale,
+            st = this.props.stemThickness * s,
+            hst = st / 2;
+
+        return React.DOM.polygon({
+            className:  'turn-indicator',
+            points: `0,-${s} ${s},0 0,${s} 0,${hst} -${s},${hst} -${s},-${hst}, 0,-${hst}`,
+            transform:  this.props.transform
+        });
+    }
+});
+
 
 const Chrome = React.createClass({
 
@@ -60,9 +80,14 @@ const Chrome = React.createClass({
 
         let background = React.createElement(ChromeBackground, { width, height });
 
+        let turnIndicator = React.createElement(TurnIndicator, {
+            scale:  25,
+            transform: 'translate(-60, -350)'
+        });
+
         return React.DOM.g({
             transform: this.props.transform
-        }, background);
+        }, background, turnIndicator);
     }
 });
 
