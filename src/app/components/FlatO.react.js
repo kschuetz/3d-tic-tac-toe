@@ -26,33 +26,23 @@
 
 const
     React = require('react'),
-    FlatO = require('./FlatO.react'),
     _ = require('lodash');
 
 
 
-const OPiece = React.createClass({
+const FlatO = React.createClass({
     render() {
-        const depth = 0.05;
 
-        const upperO = React.createElement(FlatO, {
-            className: 'o-piece-front',
-            transform: 'skewX(0)'
-        }),
-
-        lowerO = React.createElement(FlatO, {
-            className: 'o-piece-side',
-            transform: 'translate(0,' + depth + '),skewX(0)'
+        return React.DOM.circle({
+            r: 0.34,
+            className:  this.props.className,
+            transform: this.props.transform,
+            strokeWidth: 0.29
         });
 
-        return React.DOM.g({
-            transform: this.props.transform
-        }, lowerO, upperO);
-
-
     }
+
+
 });
 
-
-
-module.exports = OPiece;
+module.exports = FlatO;

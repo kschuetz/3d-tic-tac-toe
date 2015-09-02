@@ -1,5 +1,3 @@
-
-
 /*
  * The MIT License (MIT)
  *
@@ -26,33 +24,38 @@
 
 const
     React = require('react'),
-    FlatO = require('./FlatO.react'),
     _ = require('lodash');
 
 
 
-const OPiece = React.createClass({
+const XLeg = React.createClass({
     render() {
-        const depth = 0.05;
-
-        const upperO = React.createElement(FlatO, {
-            className: 'o-piece-front',
-            transform: 'skewX(0)'
-        }),
-
-        lowerO = React.createElement(FlatO, {
-            className: 'o-piece-side',
-            transform: 'translate(0,' + depth + '),skewX(0)'
-        });
-
-        return React.DOM.g({
+        return React.DOM.rect({
+            x: -0.17,
+            y: -0.5,
+            width: 0.34,
+            height: 1,
             transform: this.props.transform
-        }, lowerO, upperO);
-
-
+        });
     }
 });
 
 
+const FlatX = React.createClass({
+    render() {
 
-module.exports = OPiece;
+        const leg1 = React.createElement(XLeg, { transform: 'skewX(45)'}),
+            leg2 = React.createElement(XLeg, { transform: 'skewX(-45)'});
+
+        return React.DOM.g({
+            className:  this.props.className,
+            transform: this.props.transform,
+            fill: this.props.fill
+        }, leg1, leg2);
+
+    }
+
+
+});
+
+module.exports = FlatX;

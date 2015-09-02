@@ -25,39 +25,11 @@
 
 const
     React = require('react'),
+    FlatX = require('./FlatX.react'),
     _ = require('lodash');
 
 
 
-const XLeg = React.createClass({
-    render() {
-        return React.DOM.rect({
-            x: -0.17,
-            y: -0.5,
-            width: 0.34,
-            height: 1,
-            transform: this.props.transform
-        });
-    }
-});
-
-
-const FlatX = React.createClass({
-    render() {
-
-        const leg1 = React.createElement(XLeg, { transform: 'skewX(45)'}),
-              leg2 = React.createElement(XLeg, { transform: 'skewX(-45)'});
-
-        return React.DOM.g({
-            className:  this.props.className,
-            transform: this.props.transform,
-            fill: this.props.fill
-        }, leg1, leg2);
-
-    }
-
-
-});
 
 const XPiece = React.createClass({
     render() {

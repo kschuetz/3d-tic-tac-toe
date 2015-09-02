@@ -144,7 +144,7 @@ function runSandbox() {
     //printInfo();
     //test1();
 
-    const target = document.getElementById('sandbox-container');
+    const target = document.getElementById('game-container');
 
 
     const testBoardState1 = PhysicalBoardState.readFromString('xo..xxooxox..xx.xx.oooo.xo..o.o.ooxo.oxo.oo..x.xx.xxx.xx.xoxx.x.');
