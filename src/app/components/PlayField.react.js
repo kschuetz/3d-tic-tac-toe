@@ -39,14 +39,6 @@ const Playfield = React.createClass({
                 onClickSquare:  this.props.onClickSquare
             });
 
-        const backdrop = React.DOM.rect({
-            className: 'backdrop',
-            x:0,
-            y:0,
-            width: 100000,
-            height: 100000
-        });
-
         const
             container = React.DOM.g({
                 transform: 'translate(300,600),scale(40)'

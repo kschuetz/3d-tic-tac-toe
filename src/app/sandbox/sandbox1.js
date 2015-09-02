@@ -182,7 +182,7 @@ function runSandbox() {
 
     let sceneFrameProperties = SceneFrameProperties.defaultProperties;
 
-    let sceneFrame1 = React.createElement({
+    let sceneFrame1 = React.createElement(SceneFrame, {
         sceneFrameProperties,
         boardState:  testBoardState1,
         onClickSquare:  data => {

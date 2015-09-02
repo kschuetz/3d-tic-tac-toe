@@ -54,8 +54,9 @@ const Chrome = React.createClass({
     render() {
         let sceneFrameProperties = this.props.sceneFrameProperties;
 
-        let width = sceneFrameProperties.width,
-            height = sceneFrameProperties.height;
+        let width = sceneFrameProperties.chromeWidth,
+            chromeMargin = sceneFrameProperties.chromeMargin,
+            height = sceneFrameProperties.height - 2 * chromeMargin;
 
         let background = React.createElement(ChromeBackground, { width, height });
 
