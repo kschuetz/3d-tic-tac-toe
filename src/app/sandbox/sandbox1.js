@@ -38,7 +38,8 @@ const
     GameState = require('../core/GameState'),
     ComputerPlayer = require('../core/ComputerPlayer'),
     generateSquarePreferences = require('../core/generateSquarePreferences'),
-    BoardContents = require('../core/BoardContents');
+    BoardContents = require('../core/BoardContents'),
+    Chrome = require('../components/Chrome.react');
 
 
 
@@ -177,6 +178,12 @@ function runSandbox() {
 
     React.render(scene, target);
 
+
+    const chromeContainer = document.getElementById('chrome-container');
+
+    let chrome = React.createElement(Chrome, {});
+
+    React.render(chrome, chromeContainer);
 
     boardContentsTest();
 

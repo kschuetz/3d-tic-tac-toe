@@ -76,11 +76,11 @@ const PlayerGrid = React.createClass({
               player2Row = React.createElement(PlayerRow, { player: 2});
 
         const playerRows = React.DOM.div({
-            className: 'col-md-8'
+            className: 'col-md-10'
         }, player1Row, player2Row);
 
-        const playerSwapCell = React.createElement({
-            className: 'col-md-4'
+        const playerSwapCell = null && React.createElement({
+            className: 'col-md-2'
         }, React.createElement(PlayerSwap, {}));
 
         return React.DOM.div({
