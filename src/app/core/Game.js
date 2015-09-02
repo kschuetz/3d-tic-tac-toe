@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-
 const
     _ = require('lodash'),
     GameState = require('./GameState');
@@ -38,25 +37,48 @@ Game.prototype.loop = function() {
     const player1 = this.player1,
           player2 = this.player2,
           onStateChange = this.onStateChange || _.noop;
+
     function turn(xToMove, state) {
         onStateChange(state);
-
-        let player = xToMove ? player1 : player2;
 
         if(state.gameOver) {
             return;
         }
 
-        player.makeMove(state).result.then(resp => {
-            let newState = state.placePiece(resp.square, player.playerIndex);
+        let player = xToMove ? player1 : player2;
+        if(player.isComputerPlayer) {
+            let nextMove = player.makeMove(state);
+            if(nextMove.interrupt) {
+                this._interrupt = nextMove.interrupt;
+            } else {
+                this._interrupt = null;
+            }
 
-            setTimeout(() => {
-                turn(!xToMove, newState);
+            nextMove.result.then(resp => {
+                let newState = state.placePiece(resp.square, player.playerIndex);
+
+                setTimeout(() => {
+                    turn(!xToMove, newState);
+                });
             });
-        });
+        }
+
+
     }
 
     turn(false, GameState.defaultGameState);
+
+};
+
+
+
+Game.prototype.interrupt = function() {
+    if(this._interrupt) {
+        this._interrupt();
+    }
+};
+
+Game.prototype.submitMove = function(square) {
 
 };
 

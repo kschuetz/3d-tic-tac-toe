@@ -118,7 +118,7 @@ ComputerPlayer.prototype.makeMove = function(gameState, asPlayer) {
 };
 
 
-
+ComputerPlayer.prototype.isComputerPlayer = true;
 
 
 module.exports = ComputerPlayer;
