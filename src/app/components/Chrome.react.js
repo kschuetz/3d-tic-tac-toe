@@ -25,6 +25,7 @@
 
 const
     React = require('react'),
+    consts = require('./consts'),
     FlatX = require('./FlatX.react'),
     FlatO = require('./FlatO.react');
 
@@ -79,11 +80,13 @@ const PlayerRow = React.createClass({
 
     render() {
         const
+            isOPlayer = this.props.player === 2,
             width = this.props.width,
             height = this.props.height,
             hw = width / 2,
             hh = height / 2,
-            iconClass = this.props.player === 2 ? FlatO : FlatX;
+            iconClass = isOPlayer ? FlatO : FlatX,
+            iconCss = isOPlayer ? 'chrome-icon-o' : 'chrome-icon-x';
 
         const background = React.DOM.rect({
             className: 'chrome-player-row',
@@ -93,15 +96,23 @@ const PlayerRow = React.createClass({
             height
         });
 
-        const pieceIcon = React.createElement(iconClass, {
-            transform: `scale(${height}),translate(-${height},0)`
-        });
 
-
-        let tiWidth = (height / 2) - 10;
+        let tiWidth = (height / 2) - 10,
+            tiLeft = tiWidth - hw + 5;
         const turnIndicator = React.createElement(TurnIndicator, {
             scale:  tiWidth,
-            transform: 'translate(-${height}, -${width})'
+            transform: `translate(${tiLeft}, 0)`
+        });
+
+        const
+              iconMultiplier = isOPlayer ? consts.oPieceScale : consts.xPieceScale,
+              iconWidth = height * 0.8,
+              iconScale = iconWidth * iconMultiplier,
+              iconLeft = tiLeft + tiWidth + 5 + (iconWidth / 2);
+
+        const pieceIcon = React.createElement(iconClass, {
+            className:  iconCss,
+            transform: `translate(${iconLeft},0),scale(${iconScale})`
         });
 
         let nameLabel = null;
