@@ -36,9 +36,57 @@ const
     PhysicalBoardState = require('../core/PhysicalBoardState'),
     solutionMap = require('../core/solutionMap'),
     GameState = require('../core/GameState'),
-    computerPlayer = require('../core/computerPlayer'),
+    ComputerPlayer = require('../core/ComputerPlayer'),
     generateSquarePreferences = require('../core/generateSquarePreferences'),
     BoardContents = require('../core/BoardContents');
+
+
+
+
+const computerPlayerTests = (function() {
+    function test2() {
+        let player1 = new ComputerPlayer({ playerIndex: 1}),
+            player2 = new ComputerPlayer({ playerIndex: -1});
+
+
+        function printGameState(gameState) {
+            console.log(gameState.contents.getDebugString());
+            if(gameState.gameOver) {
+                let winningSquares = gameState.getWinningSquares();
+                console.log(winningSquares.toJS());
+            }
+        }
+
+        function turn(xToMove, state) {
+            let player = xToMove ? player1 : player2;
+            console.log(player);
+            if(state.gameOver) {
+                console.log('game over');
+                printGameState(state);
+                return;
+            }
+
+            player.makeMove(state).result.then(resp => {
+                console.log(resp);
+                let newState = state.placePiece(resp.square, player.playerIndex);
+                printGameState(newState);
+
+                setTimeout(() => {
+                    turn(!xToMove, newState);
+                });
+            });
+        }
+
+        turn(true, GameState.defaultGameState);
+    }
+
+
+    return {
+        test2
+    };
+
+})();
+
 
 
 function printInfo() {
@@ -134,7 +182,7 @@ function runSandbox() {
 
     //computerPlayer.test1();
 
-    computerPlayer.test2();
+    computerPlayerTests.test2();
 }
 
 
