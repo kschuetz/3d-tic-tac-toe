@@ -6,11 +6,16 @@
     <link rel="stylesheet" type="text/css" href="css/main.css" />
     <!-- @if MODE='dev' -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.js" ></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js" ></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/immutable/3.7.4/immutable.js" ></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js" ></script>
-    <!-- script src="//fb.me/react-0.13.3.js"></script -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.js" ></script>
+                <!-- script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js" ></script-->
+                <!-- sscript src="//cdnjs.cloudflare.com/ajax/libs/immutable/3.7.4/immutable.js" ></script-->
+                <!-- sscript src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js" ></script-->
+                <!-- sscript src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.js" ></script-->
+
+    <script src="//cdn.jsdelivr.net/lodash/3.10.1/lodash.js" ></script>
+    <script src="//cdn.jsdelivr.net/immutable.js/3.7.3/immutable.min.js" ></script>
+    <script src="//cdn.jsdelivr.net/react/0.13.3/react.js" ></script>
+    <script src="//cdn.jsdelivr.net/bootstrap/3.3.5/js/bootstrap.js" ></script>
+
     <!-- @endif -->
     <!-- @if MODE='production' -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" ></script>
@@ -27,11 +32,8 @@
 <body>
 <div class="container">
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <svg id="game-container" width="800px" height="800px"></svg>
-        </div>
-        <div class="col-md-2">
-            <div id="chrome-container"></div>
         </div>
     </div>
 </div>

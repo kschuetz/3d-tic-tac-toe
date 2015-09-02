@@ -22,47 +22,40 @@
  * THE SOFTWARE.
  */
 
-
 const
     React = require('react'),
-    FlatX = require('./FlatX.react'),
-    FlatO = require('./FlatO.react');
+    Playfield = require('./Playfield.react'),
+    Chrome = require('./Chrome.react');
 
 
-const ChromeBackground = React.createClass({
+const SceneFrame = React.createClass({
 
     render() {
-        let width = this.props.width || 200,
-            halfWidth = width / 2,
-            height = this.props.height || 700,
-            halfHeight = height / 2;
-        return React.DOM.rect({
-            className: 'chrome-background',
-            x: -halfWidth,
-            y: -halfHeight,
-            width: width,
-            height: height
+        const sceneFrameProperties = this.props.sceneFrameProperties;
+
+        const backdrop = React.DOM.rect({
+            className: 'backdrop',
+            x:0,
+            y:0,
+            width: 100000,
+            height: 100000
         });
-    }
 
+        const playField = React.createElement(Playfield, {
+            sceneFrameProperties,
+            boardState:  this.props.boardState,
+            onClickSquare:  this.props.onClickSquare
+        });
+
+        const chrome = React.createElement(Chrome, {
+            transform: 'translate(690,400)',
+            sceneFrameProperties
+        });
+
+        return React.DOM.g(null, backdrop, playField, chrome);
+    }
 
 });
 
 
-const Chrome = React.createClass({
-
-    render() {
-        let sceneFrameProperties = this.props.sceneFrameProperties;
-
-        let width = sceneFrameProperties.width,
-            height = sceneFrameProperties.height;
-
-        let background = React.createElement(ChromeBackground, { width, height });
-
-        return React.DOM.g({
-            transform: this.props.transform
-        }, background);
-    }
-});
-
-module.exports = Chrome;
+module.exports = SceneFrame;

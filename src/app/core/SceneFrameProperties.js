@@ -23,46 +23,16 @@
  */
 
 
-const
-    React = require('react'),
-    FlatX = require('./FlatX.react'),
-    FlatO = require('./FlatO.react');
+const Immutable = require('Immutable');
 
-
-const ChromeBackground = React.createClass({
-
-    render() {
-        let width = this.props.width || 200,
-            halfWidth = width / 2,
-            height = this.props.height || 700,
-            halfHeight = height / 2;
-        return React.DOM.rect({
-            className: 'chrome-background',
-            x: -halfWidth,
-            y: -halfHeight,
-            width: width,
-            height: height
-        });
-    }
-
-
+const SceneFrameProperties = Immutable.Record({
+    width: 800,
+    height: 800,
+    chromeWidth:  200,
+    chromeMargin: 10,
+    skew:  -30
 });
 
+SceneFrameProperties.defaultProperties = new SceneFrameProperties();
 
-const Chrome = React.createClass({
-
-    render() {
-        let sceneFrameProperties = this.props.sceneFrameProperties;
-
-        let width = sceneFrameProperties.width,
-            height = sceneFrameProperties.height;
-
-        let background = React.createElement(ChromeBackground, { width, height });
-
-        return React.DOM.g({
-            transform: this.props.transform
-        }, background);
-    }
-});
-
-module.exports = Chrome;
+module.exports = SceneFrameProperties;

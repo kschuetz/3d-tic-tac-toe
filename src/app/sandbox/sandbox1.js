@@ -39,7 +39,9 @@ const
     ComputerPlayer = require('../core/ComputerPlayer'),
     generateSquarePreferences = require('../core/generateSquarePreferences'),
     BoardContents = require('../core/BoardContents'),
-    Chrome = require('../components/Chrome.react');
+    Chrome = require('../components/Chrome.react'),
+    SceneFrame = require('../components/SceneFrame.react'),
+    SceneFrameProperties = require('../core/SceneFrameProperties');
 
 
 
@@ -174,20 +176,30 @@ function runSandbox() {
         transform: 'translate(400,600),scale(40)'
     }, board1); //. xPiece, oPiece);
 
-    const scene = React.DOM.g(null, backdrop, gameScene);
+    let chrome = React.createElement(Chrome, {
+        transform: 'translate(690,400)'
+    });
 
-    React.render(scene, target);
+    let sceneFrameProperties = SceneFrameProperties.defaultProperties;
 
+    let sceneFrame1 = React.createElement({
+        sceneFrameProperties,
+        boardState:  testBoardState1,
+        onClickSquare:  data => {
+            console.log('square clicked:');
+            console.log(data);
+        }
+    });
 
-    const chromeContainer = document.getElementById('chrome-container');
+    React.render(sceneFrame1, target);
 
-    let chrome = React.createElement(Chrome, {});
-
-    React.render(chrome, chromeContainer);
-
-    boardContentsTest();
-
-    //computerPlayer.test1();
+    //const scene = React.DOM.g(null, backdrop, gameScene, chrome);
+    //
+    //React.render(scene, target);
+    //
+    //boardContentsTest();
+    //
+    ////computerPlayer.test1();
 
     computerPlayerTests.test2();
 }
