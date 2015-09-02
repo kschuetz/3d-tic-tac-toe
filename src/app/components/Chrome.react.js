@@ -69,6 +69,52 @@ const TurnIndicator = React.createClass({
 });
 
 
+const PlayerRow = React.createClass({
+    getDefaultProps() {
+        return {
+            width: 180,
+            height: 60
+        };
+    },
+
+    render() {
+        const
+            width = this.props.width,
+            height = this.props.height,
+            hw = width / 2,
+            hh = height / 2,
+            iconClass = this.props.player === 2 ? FlatO : FlatX;
+
+        const background = React.DOM.rect({
+            className: 'chrome-player-row',
+            x: -hw,
+            y: -hh,
+            width,
+            height
+        });
+
+        const pieceIcon = React.createElement(iconClass, {
+            transform: `scale(${height}),translate(-${height},0)`
+        });
+
+
+        let tiWidth = (height / 2) - 10;
+        const turnIndicator = React.createElement(TurnIndicator, {
+            scale:  tiWidth,
+            transform: 'translate(-${height}, -${width})'
+        });
+
+        let nameLabel = null;
+
+        return React.DOM.g({
+            transform:  this.props.transform
+        }, background, pieceIcon, turnIndicator, nameLabel);
+    }
+
+
+});
+
+
 const Chrome = React.createClass({
 
     render() {
@@ -80,14 +126,24 @@ const Chrome = React.createClass({
 
         let background = React.createElement(ChromeBackground, { width, height });
 
-        let turnIndicator = React.createElement(TurnIndicator, {
-            scale:  25,
-            transform: 'translate(-60, -350)'
+        //let turnIndicator = React.createElement(TurnIndicator, {
+        //    scale:  25,
+        //    transform: 'translate(-60, -350)'
+        //});
+
+        let player1Row = React.createElement(PlayerRow, {
+            player:  1,
+            transform:  'translate(0, -350)'
+        });
+
+        let player2Row = React.createElement(PlayerRow, {
+            player:  2,
+            transform:  'translate(0, -270)'
         });
 
         return React.DOM.g({
             transform: this.props.transform
-        }, background, turnIndicator);
+        }, background, player1Row, player2Row);
     }
 });
 
