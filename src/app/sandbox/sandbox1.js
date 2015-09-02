@@ -175,7 +175,7 @@ function runSandbox() {
 
     const scene = React.DOM.g(null, backdrop, gameScene);
 
-    //React.render(scene, target);
+    React.render(scene, target);
 
 
     boardContentsTest();
