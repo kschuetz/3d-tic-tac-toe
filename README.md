@@ -2,6 +2,7 @@
 
 WORK IN PROGRESS.
 
+http://kschuetz.github.io/3d-tic-tac-toe
 
 # License
 
