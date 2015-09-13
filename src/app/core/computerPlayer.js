@@ -105,6 +105,10 @@ ComputerPlayer.prototype.makeMove = function(gameState, asPlayer) {
             }
             if(computation.done) {
                 let bestMove = computation.getBestMove();
+
+                console.log('pv:');
+                console.log(computation.pv.debugGetLine());
+
                 deliverMove(bestMove);
             } else {
                 setTimeout(step, self.delayBetweenTicks);

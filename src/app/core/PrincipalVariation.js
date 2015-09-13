@@ -59,5 +59,8 @@ PrincipalVariation.prototype.updateBestMove = function(ply, value) {
     }
 };
 
+PrincipalVariation.prototype.debugGetLine = function() {
+    return this.line.slice(0, this.depth);
+};
 
 module.exports = PrincipalVariation;
