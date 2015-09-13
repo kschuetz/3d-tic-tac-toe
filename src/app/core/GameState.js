@@ -96,6 +96,10 @@ GameState.prototype.isSquareEmpty = function(squareIndex) {
     return this.contents.isSquareEmpty(squareIndex);
 };
 
+GameState.prototype.getPlayerAt = function(squareIndex) {
+    return this.contents.getPlayerAt(squareIndex);
+};
+
 GameState.prototype.getOccupiedSquareCount = function() {
     return this.contents.getOccupiedSquareCount();
 };

@@ -27,7 +27,8 @@ const _ = require('lodash'),
       Immutable = require('Immutable'),
       SceneFrame = require('../components/SceneFrame.react'),
       SceneFrameProperties = require('./SceneFrameProperties'),
-      PhysicalBoardState = require('../core/PhysicalBoardState');
+      PhysicalBoardState = require('./PhysicalBoardState'),
+      getPhysicalState = require('./getPhysicalState');
 
 function MainDriver(props) {
     this.host = props.host;

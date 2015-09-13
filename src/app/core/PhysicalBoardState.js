@@ -135,4 +135,6 @@ PhysicalBoardState.prototype.writeToString = function() {
 
 PhysicalBoardState.emptyBoard = new PhysicalBoardState();
 
+PhysicalBoardState.baseSquareMap = baseSquareMap;
+
 module.exports = PhysicalBoardState;

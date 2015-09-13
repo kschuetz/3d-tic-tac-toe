@@ -54,7 +54,11 @@ Object.defineProperty(PhysicalSquareState.prototype, 'isOccupied', {
     enumerable: true
 });
 
-PhysicalSquareState.defaultState = new PhysicalSquareState();
+const defaultState = new PhysicalSquareState();
+
+PhysicalSquareState.defaultState = defaultState;
+PhysicalSquareState.clickableEmpty = defaultState;
+PhysicalSquareState.nonClickableEmpty = defaultState.set('clickable', false);
 
 
 PhysicalSquareState.xPiece = new PhysicalSquareState({
@@ -67,5 +71,14 @@ PhysicalSquareState.oPiece = new PhysicalSquareState({
     clickable:  false
 });
 
+PhysicalSquareState.playerPiece = function(playerIndex) {
+    if(playerIndex > 0) {
+        return PhysicalSquareState.xPiece;
+    } else if (playerIndex < 0) {
+        return PhysicalSquareState.oPiece;
+    } else {
+        return PhysicalSquareState.defaultState;
+    }
+};
 
 module.exports = PhysicalSquareState;
