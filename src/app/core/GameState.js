@@ -132,6 +132,18 @@ GameState.prototype.getWinningSquares = function() {
     return result;
 };
 
+GameState.prototype.getSolutionScoreSummary = function()  {
+    let result = {};
+    this.solutionScores.forEach(ss => {
+        let description = ss.description;
+        if(ss.description) {
+            let count = result[ss.description] || 0;
+            result[ss.description] = count + 1;
+        }
+    });
+    return result;
+};
+
 
 const baseGameState = new GameState({
     contents:        BoardContents.emptyBoard,

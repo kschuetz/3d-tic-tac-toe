@@ -28,8 +28,8 @@ const
 
 
 const
-    winValue = 10000,
-    threeValue = 100,
+    winValue = 100000,
+    threeValue = 1000,
     twoValue = 5,
     oneValue = 2,
     emptyValue = 1,
@@ -61,6 +61,7 @@ function isThisPlayer(playerIndex) {
 
 function Win(playerIndex) {
     this.playerIndex = playerIndex;
+    this.description = players.pieceName(playerIndex) + ' win';
 }
 
 Win.prototype.play = function() {
@@ -75,10 +76,11 @@ Win.prototype.isWinFor = isThisPlayer;
 Win.prototype.canWin = isThisPlayer;
 Win.prototype.isWin = true;
 
-function Combo(playerIndex, score, nextState) {
+function Combo(playerIndex, score, nextState, description) {
     this.playerIndex = playerIndex;
     this._score = score;
     this.nextState = nextState;
+    this.description = description;
 }
 
 Combo.prototype.play = function(playerIndex) {
@@ -102,13 +104,13 @@ Combo.prototype.canWin = isThisPlayer;
 
 const
     xWin = new Win(players.X),
-    x3 = new Combo(players.X, threeValue, xWin),
-    x2 = new Combo(players.X, twoValue, x3),
-    x1 = new Combo(players.X, oneValue, x2),
+    x3 = new Combo(players.X, threeValue, xWin, 'XXX'),
+    x2 = new Combo(players.X, twoValue, x3, 'XX'),
+    x1 = new Combo(players.X, oneValue, x2, 'X'),
     oWin = new Win(players.O),
-    o3 = new Combo(players.O, threeValue, oWin),
-    o2 = new Combo(players.O, twoValue, o3),
-    o1 = new Combo(players.O, oneValue, o2);
+    o3 = new Combo(players.O, threeValue, oWin, 'OOO'),
+    o2 = new Combo(players.O, twoValue, o3, 'OO'),
+    o1 = new Combo(players.O, oneValue, o2, 'O');
 
 const empty = {
     play(playerIndex) {

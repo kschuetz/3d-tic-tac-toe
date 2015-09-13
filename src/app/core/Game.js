@@ -52,6 +52,7 @@ function evaluateCurrentTurn(game, metaState) {
     let state = metaState.gameState;
 
     console.log(state);
+    console.log(state.getSolutionScoreSummary());
 
     if(state.gameOver) {
         console.log('GAME OVER');

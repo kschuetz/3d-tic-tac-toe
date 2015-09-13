@@ -32,12 +32,21 @@ function opposite(playerIndex) {
     return playerIndex > 0 ? -1 : 1;
 }
 
-
+function pieceName(playerIndex) {
+    if(playerIndex > 0) {
+        return 'X';
+    } else if (playerIndex < 0) {
+        return 'O';
+    } else {
+        return '-';
+    }
+}
 
 
 module.exports = {
     X:   PLAYER_X,
     O:   PLAYER_O,
 
-    opposite
+    opposite,
+    pieceName
 };
