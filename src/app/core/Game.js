@@ -39,44 +39,6 @@ function Game(props) {
 }
 
 
-Game.prototype.loop = function() {
-    const player1 = this.player1,
-          player2 = this.player2,
-          onStateChange = this.onStateChange || _.noop;
-
-    function turn(xToMove, state) {
-        onStateChange(state);
-
-        if(state.gameOver) {
-            return;
-        }
-
-        let player = xToMove ? player1 : player2;
-        if(player.isComputerPlayer) {
-            let nextMove = player.makeMove(state);
-            if(nextMove.interrupt) {
-                this._interrupt = nextMove.interrupt;
-            } else {
-                this._interrupt = null;
-            }
-
-            nextMove.result.then(resp => {
-                let newState = state.placePiece(resp.square, player.playerIndex);
-
-                setTimeout(() => {
-                    turn(!xToMove, newState);
-                });
-            });
-        }
-
-
-    }
-
-    turn(false, GameState.defaultGameState);
-
-};
-
-
 function sendStateChange(game, metaState) {
     game.metaState = metaState;
     if(game.onStateChange) {
