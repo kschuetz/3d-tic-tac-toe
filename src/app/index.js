@@ -43,11 +43,13 @@ function main() {
         });
 
     driver.run();
+
+    driver.runSandboxGame();
 }
 
-$(document).ready(sandbox1);
+//$(document).ready(sandbox1);
 
-//$(document).ready(main);
+$(document).ready(main);
 
 
 

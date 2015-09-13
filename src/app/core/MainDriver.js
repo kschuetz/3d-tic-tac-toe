@@ -28,7 +28,9 @@ const _ = require('lodash'),
       SceneFrame = require('../components/SceneFrame.react'),
       SceneFrameProperties = require('./SceneFrameProperties'),
       PhysicalBoardState = require('./PhysicalBoardState'),
-      getPhysicalState = require('./getPhysicalState');
+      getPhysicalState = require('./getPhysicalState'),
+      Game = require('./Game'),
+      ComputerPlayer = require('./ComputerPlayer');
 
 function MainDriver(props) {
     this.host = props.host;
@@ -36,6 +38,16 @@ function MainDriver(props) {
 
     this.boardState = PhysicalBoardState.emptyBoard;
 }
+
+MainDriver.prototype.handleMetaGameStateChange = function(metaGameState) {
+    let physicalState = getPhysicalState({
+            humanCanMove:   metaGameState.isWaitingForHuman,
+            lastMove:       metaGameState.lastMove
+        }, metaGameState.gameState);
+
+    this.boardState = physicalState;
+    this.invalidate();
+};
 
 
 MainDriver.prototype.handleSquareClicked = function(data) {
@@ -87,6 +99,18 @@ MainDriver.prototype.endUpdate = function() {
     } else if (this.updateLevel < 0) {
         throw new Error('each call to endUpdate must match a call to beginUpdate');
     }
+};
+
+
+MainDriver.prototype.runSandboxGame = function() {
+    let player1 = new ComputerPlayer({ playerIndex: 1}),
+        player2 = new ComputerPlayer({ playerIndex: -1});
+
+    let game = new Game({
+        player1, player2, onStateChange: this.handleMetaGameStateChange.bind(this)
+    });
+
+    game.start();
 };
 
 module.exports = MainDriver;
