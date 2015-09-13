@@ -46,7 +46,7 @@ function GameState(props) {
     this.balance = props.balance;
     this.solutionScores = props.solutionScores;
     this.winner = props.winner;
-    this.gameOver = props.winner > 0;
+    this.gameOver = props.winner !== 0;
 
     this.contents = props.contents || BoardContents.emptyBoard;
 }

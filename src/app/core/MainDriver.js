@@ -45,6 +45,8 @@ MainDriver.prototype.handleMetaGameStateChange = function(metaGameState) {
             lastMove:       metaGameState.lastMove
         }, metaGameState.gameState);
 
+    console.log(metaGameState.gameState.balance);
+
     this.boardState = physicalState;
     this.invalidate();
 };

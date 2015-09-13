@@ -51,7 +51,10 @@ let runCurrentTurn;
 function evaluateCurrentTurn(game, metaState) {
     let state = metaState.gameState;
 
+    console.log(state);
+
     if(state.gameOver) {
+        console.log('GAME OVER');
         metaState = metaState.set('phase', phaseCodes.GAME_OVER);
         sendStateChange(game, metaState);
         return;
@@ -84,6 +87,8 @@ runCurrentTurn = function(game) {
         }
 
         nextMove.result.then(resp => {
+            console.log(resp);
+
             let newGameState = gameState.placePiece(resp.square, playerTurn);
             metaState = metaState.set('lastMove', resp.square).set('gameState', newGameState);
 

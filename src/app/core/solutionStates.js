@@ -29,7 +29,7 @@ const
 
 const
     winValue = 10000,
-    threeValue = 12,
+    threeValue = 100,
     twoValue = 5,
     oneValue = 2,
     emptyValue = 1,

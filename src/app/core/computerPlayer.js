@@ -82,9 +82,7 @@ ComputerPlayer.prototype.makeMove = function(gameState, asPlayer) {
         }
 
         let maxDepth;
-        if(occupied < 4) {
-            maxDepth = 3;
-        } else if(occupied < 8) {
+        if(occupied < 8) {
             maxDepth = 4;
         } else if(occupied < 32) {
             maxDepth = 5;
