@@ -96,6 +96,8 @@ GameState.prototype.isSquareEmpty = function(squareIndex) {
     return this.contents.isSquareEmpty(squareIndex);
 };
 
+GameState.prototype.isLegalMove = GameState.prototype.isSquareEmpty;
+
 GameState.prototype.getPlayerAt = function(squareIndex) {
     return this.contents.getPlayerAt(squareIndex);
 };

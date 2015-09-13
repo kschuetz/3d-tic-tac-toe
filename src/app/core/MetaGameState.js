@@ -37,6 +37,10 @@ const MetaGameState = Immutable.Record({
     playerTurn:    players.X
 });
 
+MetaGameState.prototype.flipPlayerTurn = function() {
+    let playerTurn = this.playerTurn;
+    return this.set('playerTurn', players.opposite(playerTurn));
+};
 
 Object.defineProperty(MetaGameState.prototype, 'isThinking', {
     get() {

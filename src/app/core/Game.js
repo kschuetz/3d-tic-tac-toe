@@ -25,30 +25,18 @@
 const
     _ = require('lodash'),
     Immutable = require('Immutable'),
-    GameState = require('./GameState');
+    GameState = require('./GameState'),
+    MetaGameState = require('./MetaGameState'),
+    phaseCodes = require('./phaseCodes');
 
-
-const phaseCodes = {
-    INIT:                0,
-    WAITING_FOR_HUMAN:   1,
-    THINKING:            2,
-    GAME_OVER:           3
-};
 
 
 function Game(props) {
     this.player1 = props.player1;
     this.player2 = props.player2;
     this.onStateChange = props.onStateChange;
-    this.phase = phaseCodes.INIT;
+    this.metaState = props.metaState || new MetaGameState();
 }
-
-const GameStatus = Immutable.Record({
-    gameState:     GameState.defaultGameState,
-    phase:         0,
-    lastMove:      -1,
-    playerTurn:    1
-});
 
 
 Game.prototype.loop = function() {
@@ -89,6 +77,76 @@ Game.prototype.loop = function() {
 };
 
 
+function sendStateChange(game, metaState) {
+    game.metaState = metaState;
+    if(game.onStateChange) {
+        game.onStateChange(metaState);
+    }
+}
+
+let runCurrentTurn;
+
+function evaluateCurrentTurn(game, metaState) {
+    let state = metaState.gameState;
+
+    if(state.gameOver) {
+        metaState = metaState.set('phase', phaseCodes.GAME_OVER);
+        sendStateChange(game, metaState);
+        return;
+    }
+
+    // go to next turn
+    metaState = metaState.flipPlayerTurn();
+    setTimeout(() => {
+        game.metaState = metaState;
+        runCurrentTurn(game);
+    });
+}
+
+runCurrentTurn = function(game) {
+    let metaState = game.metaState,
+        playerTurn = metaState.playerTurn,
+        playerToMove = playerTurn > 0 ? game.player1 : game.player2;
+    if(playerToMove && playerToMove.isComputerPlayer) {
+
+        metaState = metaState.set('phase', phaseCodes.THINKING);
+        sendStateChange(game, metaState);
+
+        let gameState = metaState.gameState,
+            nextMove = playerToMove.makeMove(gameState, playerTurn);
+
+        if(nextMove.interrupt) {
+            game._interrupt = nextMove.interrupt;
+        } else {
+            game._interrupt = null;
+        }
+
+        nextMove.result.then(resp => {
+            let newGameState = gameState.placePiece(resp.square, playerTurn);
+            metaState = metaState.set('lastMove', resp.square).set('gameState', newGameState);
+
+            setTimeout(() => evaluateCurrentTurn(game, metaState));
+        });
+
+
+    } else {
+        // human
+
+        metaState = metaState.set('phase', phaseCodes.WAITING_FOR_HUMAN);
+        sendStateChange(game, metaState);
+
+    }
+
+};
+
+Game.prototype.start = function() {
+    let metaState = this.metaState;
+    if(metaState.isGameStarted) {
+        return;
+    }
+    runCurrentTurn(this);
+};
+
 
 Game.prototype.interrupt = function() {
     if(this._interrupt) {
@@ -97,7 +155,21 @@ Game.prototype.interrupt = function() {
 };
 
 Game.prototype.submitMove = function(square) {
+    let game = this,
+        metaState = this.metaState;
+    if(!metaState.isWaitingForHuman) {
+        return;
+    }
+    let gameState = metaState.gameState;
+    if(!gameState.isLegalMove(square)) {
+        return;
+    }
 
+    let playerTurn = metaState.playerTurn,
+        newGameState = gameState.placePiece(square, playerTurn);
+    metaState = metaState.set('lastMove', square).set('gameState', newGameState);
+
+    setTimeout(() => evaluateCurrentTurn(game, metaState));
 };
 
 module.exports = Game;
