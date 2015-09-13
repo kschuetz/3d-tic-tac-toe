@@ -53,6 +53,10 @@ MainDriver.prototype.handleMetaGameStateChange = function(metaGameState) {
 MainDriver.prototype.handleSquareClicked = function(data) {
     console.log('square clicked:');
     console.log(data);
+    if(this.game) {
+        let squareIndex = 16 * data.planeIndex + 4 * data.rowIndex + data.colIndex;
+        this.game.submitMove(squareIndex);
+    }
 };
 
 MainDriver.prototype.redraw = function() {
@@ -103,13 +107,14 @@ MainDriver.prototype.endUpdate = function() {
 
 
 MainDriver.prototype.runSandboxGame = function() {
-    let player1 = new ComputerPlayer({ playerIndex: 1}),
+    let player1 = null,   //new ComputerPlayer({ playerIndex: 1}),
         player2 = new ComputerPlayer({ playerIndex: -1});
 
     let game = new Game({
         player1, player2, onStateChange: this.handleMetaGameStateChange.bind(this)
     });
 
+    this.game = game;
     game.start();
 };
 
