@@ -27,14 +27,27 @@ const
     React = require('react'),
     _ = require('lodash'),
     Immutable = require('Immutable'),
-    $ = require('jquery');
+    $ = require('jquery'),
+    MainDriver = require('./core/MainDriver');
 
 
 
 const sandbox1 = require('sandbox/sandbox1');
 
 
-$(document).ready(sandbox1);
+function main() {
+    const
+        host = document.getElementById('game-container'),
+        driver = new MainDriver({
+            host
+        });
+
+    driver.run();
+}
+
+//$(document).ready(sandbox1);
+
+$(document).ready(main);
 
 
 

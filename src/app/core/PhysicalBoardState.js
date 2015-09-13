@@ -133,4 +133,6 @@ PhysicalBoardState.prototype.writeToString = function() {
 };
 
 
+PhysicalBoardState.emptyBoard = new PhysicalBoardState();
+
 module.exports = PhysicalBoardState;
