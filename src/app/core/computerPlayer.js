@@ -34,7 +34,9 @@ const
     MoveResponse = require('./MoveResponse');
 
 
-const defaultStepsPerTick = 20000;
+const
+    defaultStepsPerTick = 20000,
+    defaultDelayBetweenTicks = 1;       // higher is slower but gives the browser more breathing room
 
 
 
@@ -42,7 +44,13 @@ const defaultStepsPerTick = 20000;
 function ComputerPlayer(props) {
     this.stepsPerTick = props.stepsPerTick || defaultStepsPerTick;
     this.playerIndex = props.playerIndex || -1;
+    if(_.isUndefined(props.delayBetweenTicks)) {
+        this.delayBetweenTicks = defaultDelayBetweenTicks;
+    } else {
+        this.delayBetweenTicks = props.delayBetweenTicks;
+    }
     this.squarePrefs = generateSquarePreferences();
+
     //this.level = props.level || 1;
 }
 
@@ -101,7 +109,7 @@ ComputerPlayer.prototype.makeMove = function(gameState, asPlayer) {
                 let bestMove = computation.getBestMove();
                 deliverMove(bestMove);
             } else {
-                setTimeout(step, 5);
+                setTimeout(step, self.delayBetweenTicks);
             }
         };
 
