@@ -22,18 +22,9 @@
  * THE SOFTWARE.
  */
 
-
-
-function GameEngine() {
-
-
-}
-
-
-GameEngine.prototype.run = function() {
-
-
+module.exports = {
+    INIT:                0,
+    WAITING_FOR_HUMAN:   1,
+    THINKING:            2,
+    GAME_OVER:           3
 };
-
-
-

@@ -24,13 +24,31 @@
 
 const
     _ = require('lodash'),
+    Immutable = require('Immutable'),
     GameState = require('./GameState');
+
+
+const phaseCodes = {
+    INIT:                0,
+    WAITING_FOR_HUMAN:   1,
+    THINKING:            2,
+    GAME_OVER:           3
+};
+
 
 function Game(props) {
     this.player1 = props.player1;
     this.player2 = props.player2;
     this.onStateChange = props.onStateChange;
+    this.phase = phaseCodes.INIT;
 }
+
+const GameStatus = Immutable.Record({
+    gameState:     GameState.defaultGameState,
+    phase:         0,
+    lastMove:      -1,
+    playerTurn:    1
+});
 
 
 Game.prototype.loop = function() {
