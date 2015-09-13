@@ -138,6 +138,7 @@ Ply.prototype.process = function() {
 };
 
 Ply.prototype.answer = function(value) {
+    value = -value;
     if(value >= this.beta) {
         return this.parent.answer(this.beta);
     }
