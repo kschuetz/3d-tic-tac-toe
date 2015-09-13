@@ -45,9 +45,9 @@ function main() {
     driver.run();
 }
 
-//$(document).ready(sandbox1);
+$(document).ready(sandbox1);
 
-$(document).ready(main);
+//$(document).ready(main);
 
 
 

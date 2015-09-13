@@ -27,7 +27,7 @@ const Immutable = require('Immutable');
 
 
 const PhysicalSquareState = Immutable.Record({
-    pieceType: 0,       // 0, 1, or 2
+    pieceType: 0,       // 0, 1, or -1
     clickable: true,
     animState: null,
     animPhaseOffset: 0        // 0 .. 1
@@ -35,21 +35,21 @@ const PhysicalSquareState = Immutable.Record({
 
 Object.defineProperty(PhysicalSquareState.prototype, 'isXPiece', {
     get() {
-        return this.pieceType === 1;
+        return this.pieceType > 0;
     },
     enumerable: true
 });
 
 Object.defineProperty(PhysicalSquareState.prototype, 'isOPiece', {
     get() {
-        return this.pieceType === 2;
+        return this.pieceType < 0;
     },
     enumerable: true
 });
 
 Object.defineProperty(PhysicalSquareState.prototype, 'isOccupied', {
     get() {
-        return this.pieceType > 0;
+        return this.pieceType !== 0;
     },
     enumerable: true
 });
@@ -63,7 +63,7 @@ PhysicalSquareState.xPiece = new PhysicalSquareState({
 });
 
 PhysicalSquareState.oPiece = new PhysicalSquareState({
-    pieceType:  2,
+    pieceType:  -1,
     clickable:  false
 });
 
