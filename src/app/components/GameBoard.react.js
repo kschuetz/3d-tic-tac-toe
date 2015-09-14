@@ -28,7 +28,8 @@ const
     _ = require('lodash'),
     Plane = require('./Plane.react'),
     XPiece = require('./XPiece.react'),
-    OPiece = require('./OPiece.react');
+    OPiece = require('./OPiece.react'),
+    AnimStates = require('../core/AnimStates');
 
 
 
@@ -39,6 +40,13 @@ const BoardPiece = React.createClass({
               y = this.props.y;
 
         let scale = this.props.scale || 0.7;
+
+        let animState = squareState.animState;
+        if(animState === AnimStates.HIGHLIGHTED) {
+            scale = scale * 1.3;
+        } else if (animState === AnimStates.FLASHING) {
+            scale = scale * 1.5;
+        }
 
         let pieceClass;
         if(squareState.isXPiece) {
