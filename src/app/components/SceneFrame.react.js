@@ -31,7 +31,8 @@ const
 const SceneFrame = React.createClass({
 
     render() {
-        const sceneFrameProperties = this.props.sceneFrameProperties;
+        const sceneFrameProperties = this.props.sceneFrameProperties,
+              playerTurn = this.props.playerTurn;
 
         const backdrop = React.DOM.rect({
             className: 'backdrop',
@@ -48,6 +49,7 @@ const SceneFrame = React.createClass({
         });
 
         const chrome = React.createElement(Chrome, {
+            playerTurn,
             transform: 'translate(690,400)',
             sceneFrameProperties
         });

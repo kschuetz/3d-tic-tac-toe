@@ -27,7 +27,8 @@ const
     React = require('react'),
     consts = require('./consts'),
     FlatX = require('./FlatX.react'),
-    FlatO = require('./FlatO.react');
+    FlatO = require('./FlatO.react'),
+    players = require('../core/players');
 
 
 const ChromeBackground = React.createClass({
@@ -80,7 +81,8 @@ const PlayerRow = React.createClass({
 
     render() {
         const
-            isOPlayer = this.props.player === 2,
+            isOPlayer = this.props.player === players.O,
+            isPlayerTurn = this.props.isPlayerTurn,
             width = this.props.width,
             height = this.props.height,
             hw = width / 2,
@@ -99,10 +101,14 @@ const PlayerRow = React.createClass({
 
         let tiWidth = (height / 2) - 10,
             tiLeft = tiWidth - hw + 5;
-        const turnIndicator = React.createElement(TurnIndicator, {
-            scale:  tiWidth,
-            transform: `translate(${tiLeft}, 0)`
-        });
+
+        let turnIndicator = null;
+        if(isPlayerTurn) {
+            turnIndicator = React.createElement(TurnIndicator, {
+                scale:  tiWidth,
+                transform: `translate(${tiLeft}, 0)`
+            });
+        }
 
         const
               iconMultiplier = isOPlayer ? consts.oPieceScale : consts.xPieceScale,
@@ -129,7 +135,8 @@ const PlayerRow = React.createClass({
 const Chrome = React.createClass({
 
     render() {
-        let sceneFrameProperties = this.props.sceneFrameProperties;
+        let sceneFrameProperties = this.props.sceneFrameProperties,
+            playerTurn = this.props.playerTurn;
 
         let width = sceneFrameProperties.chromeWidth,
             chromeMargin = sceneFrameProperties.chromeMargin,
@@ -143,12 +150,14 @@ const Chrome = React.createClass({
         //});
 
         let player1Row = React.createElement(PlayerRow, {
-            player:  1,
+            player:  players.X,
+            isPlayerTurn:   playerTurn === players.X,
             transform:  'translate(0, -350)'
         });
 
         let player2Row = React.createElement(PlayerRow, {
-            player:  2,
+            player:  players.O,
+            isPlayerTurn:  playerTurn === players.O,
             transform:  'translate(0, -270)'
         });
 

@@ -36,6 +36,7 @@ function MainDriver(props) {
     this.host = props.host;
     this.sceneFrameProperties = props.sceneFrameProperties || SceneFrameProperties.defaultProperties;
 
+    this.playerTurn = 0;
     this.boardState = PhysicalBoardState.emptyBoard;
 }
 
@@ -48,6 +49,7 @@ MainDriver.prototype.handleMetaGameStateChange = function(metaGameState) {
     console.log(metaGameState.gameState.balance);
 
     this.boardState = physicalState;
+    this.playerTurn = metaGameState.playerTurn;
     this.invalidate();
 };
 
@@ -64,6 +66,7 @@ MainDriver.prototype.handleSquareClicked = function(data) {
 MainDriver.prototype.redraw = function() {
     let frame = React.createElement(SceneFrame, {
         sceneFrameProperties:  this.sceneFrameProperties,
+        playerTurn:  this.playerTurn,
         boardState:  this.boardState,
         onClickSquare:  this.handleSquareClicked.bind(this)
     });
