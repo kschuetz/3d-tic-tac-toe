@@ -44,6 +44,7 @@ const SceneFrame = React.createClass({
 
         const playField = React.createElement(Playfield, {
             sceneFrameProperties,
+            t:           this.props.t,
             boardState:  this.props.boardState,
             onClickSquare:  this.props.onClickSquare
         });

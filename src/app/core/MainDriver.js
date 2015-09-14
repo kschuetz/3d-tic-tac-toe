@@ -64,10 +64,9 @@ MainDriver.prototype.handleSquareClicked = function(data) {
 };
 
 MainDriver.prototype.handleAnimationFrame = function(t) {
-    console.log(t);
-
     let frame = React.createElement(SceneFrame, {
         sceneFrameProperties:  this.sceneFrameProperties,
+        t,
         playerTurn:  this.playerTurn,
         boardState:  this.boardState,
         onClickSquare:  this.handleSquareClicked.bind(this)

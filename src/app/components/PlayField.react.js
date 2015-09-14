@@ -34,6 +34,7 @@ const Playfield = React.createClass({
 
         const
             board = React.createElement(GameBoard, {
+                t:     this.props.t,
                 skew: sceneFrameProperties.skew,
                 boardState:  this.props.boardState,
                 onClickSquare:  this.props.onClickSquare
