@@ -80,7 +80,7 @@ MainDriver.prototype.invalidate = function() {
         if(this.updateLevel > 0) {
             this.dirty = true;
         } else {
-            setTimeout(this.redraw.bind(this));
+            window.requestAnimationFrame(this.redraw.bind(this));
         }
     }
 };
