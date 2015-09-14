@@ -63,7 +63,9 @@ MainDriver.prototype.handleSquareClicked = function(data) {
     }
 };
 
-MainDriver.prototype.redraw = function() {
+MainDriver.prototype.handleAnimationFrame = function(t) {
+    console.log(t);
+
     let frame = React.createElement(SceneFrame, {
         sceneFrameProperties:  this.sceneFrameProperties,
         playerTurn:  this.playerTurn,
@@ -80,14 +82,14 @@ MainDriver.prototype.invalidate = function() {
         if(this.updateLevel > 0) {
             this.dirty = true;
         } else {
-            window.requestAnimationFrame(this.redraw.bind(this));
+            window.requestAnimationFrame(this.handleAnimationFrame.bind(this));
         }
     }
 };
 
 MainDriver.prototype.run = function() {
     this.running = true;
-    this.redraw();
+    this.invalidate();
 };
 
 MainDriver.prototype.stop = function() {
