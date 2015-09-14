@@ -23,7 +23,8 @@
  * THE SOFTWARE.
  */
 
-const Immutable = require('Immutable');
+const Immutable = require('Immutable'),
+      AnimStates = require('./AnimStates');
 
 
 const PhysicalSquareState = Immutable.Record({
@@ -50,6 +51,13 @@ Object.defineProperty(PhysicalSquareState.prototype, 'isOPiece', {
 Object.defineProperty(PhysicalSquareState.prototype, 'isOccupied', {
     get() {
         return this.pieceType !== 0;
+    },
+    enumerable: true
+});
+
+Object.defineProperty(PhysicalSquareState.prototype, 'isAnimating', {
+    get() {
+        return this.animState === AnimStates.FLASHING;
     },
     enumerable: true
 });

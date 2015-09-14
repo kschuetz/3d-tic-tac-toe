@@ -24,6 +24,7 @@
  */
 
 const Immutable = require('Immutable'),
+      _ = require('lodash'),
       PhysicalSquareState = require('./PhysicalSquareState');
 
 const defaultSquareState = PhysicalSquareState.defaultState,
@@ -96,6 +97,18 @@ PhysicalBoardState.prototype.updateSquare = function(plane, row, col, f) {
     }
 
 };
+
+Object.defineProperty(PhysicalBoardState.prototype, 'isAnimating', {
+    get() {
+        let result = this._isAnimating;
+        if(_.isUndefined(result)) {
+            result = this._squares.some(s => s.isAnimating);
+
+            this._isAnimating = result;
+        }
+        return result;
+    }
+});
 
 PhysicalBoardState.readFromString = function(s) {
     let len = (s && s.length) || 0;

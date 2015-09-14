@@ -74,6 +74,10 @@ MainDriver.prototype.handleAnimationFrame = function(t) {
     });
 
     React.render(frame, this.host);
+
+    if(this.boardState.isAnimating) {
+        this.invalidate();
+    }
 };
 
 
