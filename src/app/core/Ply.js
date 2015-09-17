@@ -51,7 +51,6 @@ function generateMoves(gameState, squarePrefs, player, pvMove) {
 }
 
 
-
 function moveSort1(moveA, moveB) {
     let result = moveB.balance - moveA.balance;
     if(result === 0) {
