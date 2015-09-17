@@ -51,6 +51,77 @@ function generateMoves(gameState, squarePrefs, player, pvMove) {
 }
 
 
+
+function moveSort1(moveA, moveB) {
+    let result = moveB.balance - moveA.balance;
+    if(result === 0) {
+        result = moveB.preference - moveA.preference;
+    }
+    return result;
+}
+
+function moveSort2(moveA, moveB) {
+    let result = moveA.balance - moveB.balance;
+    if(result === 0) {
+        result = moveB.preference - moveA.preference;
+    }
+    return result;
+}
+
+function generateMovesSorted(gameState, squarePrefs, player, pvMove) {
+    let moves = [],
+        firstMove = null;
+
+    for(let square = 0; square < 64; square += 1) {
+        if(gameState.isSquareEmpty(square)) {
+            let state = gameState.placePiece(square, player),
+                move = {
+                    state,
+                    square,
+                    balance:     state.balance,
+                    value:       player * state.balance,
+                    preference:  squarePrefs[square]
+                };
+            if(pvMove === square) {
+                firstMove = move;
+            } else {
+                moves.push(move);
+            }
+        }
+    }
+
+    let moveCount = moves.length,
+        best = Number.NEGATIVE_INFINITY,
+        bestIndex = -1;
+
+    for(let i = 0; i < moveCount; i += 1) {
+        let move = moves[i];
+        if(move.value > best) {
+            best = move.value;
+            bestIndex = i;
+        }
+    }
+
+    if(bestIndex >= 0) {
+        let move = moves[bestIndex];
+        moves.splice(bestIndex, 1);
+        moves.unshift(move);
+    }
+
+    // sort
+    let sortFn = player > 0 ? moveSort1 : moveSort2;
+
+    //moves = _.sortBy(moves, sortFn);
+
+    if(firstMove) {
+        moves.unshift(firstMove);
+    }
+    return moves.map(m => m.square);
+
+}
+
+
+
 function Ply(props) {
     let host = props.host,
         pv = host.pv,
@@ -72,7 +143,14 @@ function Ply(props) {
     this.depth = props.depth;
     this.gameState = props.gameState;
 
-    this.moves = generateMoves(props.gameState, squarePrefs, this.player, pvMove);
+    if(root) {
+        this.moves = generateMovesSorted(props.gameState, squarePrefs, this.player, pvMove);
+        //console.log('move sorted:');
+        //console.log(this.moves);
+    } else {
+        this.moves = generateMovesSorted(props.gameState, squarePrefs, this.player, pvMove);
+    }
+
     this.moveCount = this.moves.length;
     this.nextMovePtr = 0;
 
