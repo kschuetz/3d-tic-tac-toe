@@ -33,9 +33,9 @@ const
 
 
 const
-    flashFreq = 0.05,
+    flashFreq = 0.04,
     phaseOffsets = [0, Math.PI / 2, Math.PI, 3 * Math.PI / 2],
-    flashAmplitude = 0.3;
+    flashAmplitude = 0.5;
 
 
 const BoardPiece = React.createClass({
@@ -124,7 +124,7 @@ const GameBoardPlane = React.createClass({
                 let phaseOffsetIndex = (planeIndex + colIndex + rowIndex) % 4,
                     phaseOffset = phaseOffsets[phaseOffsetIndex],
                     flashT = phaseOffset + (flashFreq * t) / (2 * Math.PI),
-                    flashScale = 1.0 + flashAmplitude * Math.sin(flashT);
+                    flashScale = 1.0 + flashAmplitude * Math.abs(Math.sin(flashT));
 
                 let square = boardState.getSquare(planeIndex, rowIndex, colIndex),
                     piece = React.createElement(BoardPiece, {
