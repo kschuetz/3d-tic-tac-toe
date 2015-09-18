@@ -93,12 +93,14 @@ ComputerPlayer.prototype.makeMove = function(gameState, asPlayer) {
         }
 
         let maxDepth;
-        if(occupied < 8) {
-            maxDepth = 4;
+        if(occupied < 3) {
+            maxDepth = 2;
+        } else if(occupied < 8) {
+            maxDepth = 3;
         } else if(occupied < 32) {
-            maxDepth = 5;
+            maxDepth = 4;
         } else {
-            maxDepth = 6;
+            maxDepth = 5;
         }
 
         let computation = new MoveComputation({

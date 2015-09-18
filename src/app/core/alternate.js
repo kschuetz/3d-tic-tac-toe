@@ -3,7 +3,7 @@
 function moveSort1(moveA, moveB) {
     let result = moveB.balance - moveA.balance;
     if(result === 0) {
-        result = moveB.preference - moveA.preference;
+        result = moveB.affinity - moveA.affinity;
     }
     return result;
 }
@@ -11,7 +11,7 @@ function moveSort1(moveA, moveB) {
 function moveSort2(moveA, moveB) {
     let result = moveA.balance - moveB.balance;
     if(result === 0) {
-        result = moveB.preference - moveA.preference;
+        result = moveB.affinity - moveA.affinity;
     }
     return result;
 }

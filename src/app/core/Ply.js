@@ -23,7 +23,8 @@
  * THE SOFTWARE.
  */
 
-const MoveCandidate = require('./MoveCandidate');
+const _ = require('lodash'),
+      MoveCandidate = require('./MoveCandidate');
 
 function generateMoves(gameState, squarePrefs, player, pvMove) {
     let result = [],
@@ -56,7 +57,7 @@ function generateMoves(gameState, squarePrefs, player, pvMove) {
 function moveSort1(moveA, moveB) {
     let result = moveB.balance - moveA.balance;
     if(result === 0) {
-        result = moveB.preference - moveA.preference;
+        result = moveB.affinity - moveA.affinity;
     }
     return result;
 }
@@ -64,7 +65,7 @@ function moveSort1(moveA, moveB) {
 function moveSort2(moveA, moveB) {
     let result = moveA.balance - moveB.balance;
     if(result === 0) {
-        result = moveB.preference - moveA.preference;
+        result = moveB.affinity - moveA.affinity;
     }
     return result;
 }
@@ -81,7 +82,7 @@ function generateMovesSorted(gameState, squarePrefScores, player, pvMove) {
                     square,
                     balance:     state.balance,
                     value:       player * state.balance,
-                    preference:  squarePrefScores[square]
+                    affinity:  squarePrefScores[square]
                 });
             if(pvMove === square) {
                 firstMove = move;
@@ -112,7 +113,7 @@ function generateMovesSorted(gameState, squarePrefScores, player, pvMove) {
     // sort
     let sortFn = player > 0 ? moveSort1 : moveSort2;
 
-    //moves = _.sortBy(moves, sortFn);
+    moves = _.sortBy(moves, sortFn);
 
     if(firstMove) {
         moves.unshift(firstMove);

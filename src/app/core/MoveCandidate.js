@@ -27,7 +27,7 @@ function MoveCandidate(props) {
     this.state = props.state;
     this.balance = props.state.balance;
     this.value = props.value;
-    this.preference = props.preference;
+    this.affinity = props.affinity;
 }
 
 
