@@ -7,6 +7,17 @@ http://kschuetz.github.io/3d-tic-tac-toe
 
 # Build Instructions
 
+`npm install`
+
+## Development
+
+- `gulp dev` - Compile dev version (output to `dev` directory)
+- `gulp dev-serve` - Open an instance of Browsersync pointing to dev build
+
+## Production
+
+- `gulp dist` - Compile dist version (output to `dist` directory)
+- `gulp dist-serve` - Open an instance of Browsersync pointing to dist build
 
 # License
 
