@@ -23,6 +23,8 @@
  * THE SOFTWARE.
  */
 
+const MoveCandidate = require('./MoveCandidate');
+
 function generateMoves(gameState, squarePrefs, player, pvMove) {
     let result = [],
         len = squarePrefs.length;
@@ -74,13 +76,13 @@ function generateMovesSorted(gameState, squarePrefs, player, pvMove) {
     for(let square = 0; square < 64; square += 1) {
         if(gameState.isSquareEmpty(square)) {
             let state = gameState.placePiece(square, player),
-                move = {
+                move = new MoveCandidate({
                     state,
                     square,
                     balance:     state.balance,
                     value:       player * state.balance,
                     preference:  squarePrefs[square]
-                };
+                });
             if(pvMove === square) {
                 firstMove = move;
             } else {
@@ -115,7 +117,7 @@ function generateMovesSorted(gameState, squarePrefs, player, pvMove) {
     if(firstMove) {
         moves.unshift(firstMove);
     }
-    return moves.map(m => m.square);
+    return moves; //.map(m => m.square);
 
 }
 
@@ -172,11 +174,12 @@ Ply.prototype.process = function() {
         return this.parent.answer(this.alpha);
     }
 
-    let move = this.moves[this.nextMovePtr];
+    let candidate = this.moves[this.nextMovePtr],
+        move = candidate.square;
     this.lastMove = move;
     this.nextMovePtr += 1;
 
-    let newState = this.gameState.placePiece(move, this.player);
+    let newState = candidate.state; //this.gameState.placePiece(move, this.player);
     if(newState.gameOver || this.depth <= 0) {
         let value = this.player * newState.balance;
         if(value >= this.beta) {
