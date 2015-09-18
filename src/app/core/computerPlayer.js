@@ -57,10 +57,10 @@ function ComputerPlayer(props) {
         squarePrefs[square] = 64 - i;
     }
 
-    this.squarePrefs = squarePrefs;
+    this.squarePrefScores = squarePrefs;
 
     console.log(this.favoriteSquares);
-    console.log(this.squarePrefs);
+    console.log(this.squarePrefScores);
 
     //this.level = props.level || 1;
 }
@@ -106,7 +106,7 @@ ComputerPlayer.prototype.makeMove = function(gameState, asPlayer) {
             maxDepth,
             player:   asPlayer,
             gameState,
-            squarePrefs:  this.squarePrefs
+            squarePrefScores:  this.squarePrefScores
         });
 
         let step = function() {

@@ -69,7 +69,7 @@ function moveSort2(moveA, moveB) {
     return result;
 }
 
-function generateMovesSorted(gameState, squarePrefs, player, pvMove) {
+function generateMovesSorted(gameState, squarePrefScores, player, pvMove) {
     let moves = [],
         firstMove = null;
 
@@ -81,7 +81,7 @@ function generateMovesSorted(gameState, squarePrefs, player, pvMove) {
                     square,
                     balance:     state.balance,
                     value:       player * state.balance,
-                    preference:  squarePrefs[square]
+                    preference:  squarePrefScores[square]
                 });
             if(pvMove === square) {
                 firstMove = move;
@@ -126,7 +126,7 @@ function generateMovesSorted(gameState, squarePrefs, player, pvMove) {
 function Ply(props) {
     let host = props.host,
         pv = host.pv,
-        squarePrefs = host.squarePrefs,
+        squarePrefScores = host.squarePrefScores,
         root = !!props.root,
         left = root || !!props.left;
 
@@ -145,11 +145,11 @@ function Ply(props) {
     this.gameState = props.gameState;
 
     if(root) {
-        this.moves = generateMovesSorted(props.gameState, squarePrefs, this.player, pvMove);
+        this.moves = generateMovesSorted(props.gameState, squarePrefScores, this.player, pvMove);
         //console.log('move sorted:');
         //console.log(this.moves);
     } else {
-        this.moves = generateMovesSorted(props.gameState, squarePrefs, this.player, pvMove);
+        this.moves = generateMovesSorted(props.gameState, squarePrefScores, this.player, pvMove);
     }
 
     this.moveCount = this.moves.length;
