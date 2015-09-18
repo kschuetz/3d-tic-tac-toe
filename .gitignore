@@ -37,6 +37,7 @@ temp
 .tmp
 dist
 compiled
+dev
 build
 packaged
 desktop.ini

@@ -6,23 +6,23 @@ const _ = require('lodash'),
 module.exports = _.merge({}, commonConfig, {
     htmlMode:       'dev',
 
-    outputJsDir:    './build/js',
-    outputCssDir:   './build/css',
+    outputJsDir:    './dev/js',
+    outputCssDir:   './dev/css',
     //aliases:        getDevAliases(),
     browserSyncOptions: {
         server: {
-            baseDir: './build'
+            baseDir: './dev'
         }
         //startPath:  './build'
     },
-    outputBaseDir:  './build',
+    outputBaseDir:  './dev',
 
     cssOptions: {
         dev: true
     },
 
     vendorBundleConfig:  _.merge({}, vendorBundleBaseConfig, {
-        outputJsDir:    './build/js',
+        outputJsDir:    './dev/js',
         browserifyOptions: {
             debug: true
         }
