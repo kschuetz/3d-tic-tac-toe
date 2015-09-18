@@ -106,7 +106,7 @@ function generateMoves(gameState, squarePrefs, player, pvMove) {
 function Ply(props) {
     let host = props.host,
         pv = host.pv,
-        squarePrefs = host.squarePrefs,
+        squarePrefs = host.favoriteSquares,
         root = !!props.root,
         left = root || !!props.left;
 

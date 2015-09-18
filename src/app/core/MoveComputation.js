@@ -34,7 +34,7 @@ function MoveComputation(props) {
     this.gameState = props.gameState;
     this.player = props.player;
 
-    this.squarePrefs = props.squarePrefs;
+    this.favoriteSquares = props.favoriteSquares;
 
     this.pv = new PrincipalVariation(this.maxDepth);
     this.iteration = 0;

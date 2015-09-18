@@ -59,10 +59,13 @@ const minor = (function() {
 
     generate(result, outer, outer, inner);
     generate(result, outer, inner, outer);
-    generate(result, outer, inner, inner);
+    generate(result, inner, outer, outer);
     return result;
 })();
 
+
+console.log(major);
+console.log(minor);
 
 function generateSquarePreferences() {
     let majorShuffled = _.shuffle(major),

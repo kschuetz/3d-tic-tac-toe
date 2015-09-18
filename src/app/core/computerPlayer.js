@@ -49,7 +49,18 @@ function ComputerPlayer(props) {
     } else {
         this.delayBetweenTicks = props.delayBetweenTicks;
     }
-    this.squarePrefs = generateSquarePreferences();
+    this.favoriteSquares = generateSquarePreferences();
+
+    let squarePrefs = new Array(64);
+    for(let i = 0; i < 64; i += 1) {
+        let square = this.favoriteSquares[i];
+        squarePrefs[square] = 64 - i;
+    }
+
+    this.squarePrefs = squarePrefs;
+
+    console.log(this.favoriteSquares);
+    console.log(this.squarePrefs);
 
     //this.level = props.level || 1;
 }
@@ -77,7 +88,7 @@ ComputerPlayer.prototype.makeMove = function(gameState, asPlayer) {
         let occupied = gameState.getOccupiedSquareCount();
         if(occupied < 1) {
             // first move just picks a random of the strongest squares
-            deliverMove(self.squarePrefs[0]);
+            deliverMove(self.favoriteSquares[0]);
             return;
         }
 
