@@ -58,11 +58,6 @@ function ComputerPlayer(props) {
     }
 
     this.squarePrefScores = squarePrefs;
-
-    console.log(this.favoriteSquares);
-    console.log(this.squarePrefScores);
-
-    //this.level = props.level || 1;
 }
 
 

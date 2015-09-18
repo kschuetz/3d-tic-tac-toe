@@ -64,9 +64,6 @@ const minor = (function() {
 })();
 
 
-console.log(major);
-console.log(minor);
-
 function generateSquarePreferences() {
     let majorShuffled = _.shuffle(major),
         minorShuffled = _.shuffle(minor),
