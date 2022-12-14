@@ -22,12 +22,8 @@
  * THE SOFTWARE.
  */
 
-
-function MoveResponse(props) {
+export function MoveResponse(props) {
     this.square = props.square;
     this.interrupted = !!props.interrupted;
     this.timeTaken = props.timeTaken;
 }
-
-
-module.exports = MoveResponse;

@@ -1,4 +1,3 @@
-
 /*
  * The MIT License (MIT)
  *
@@ -23,9 +22,7 @@
  * THE SOFTWARE.
  */
 
-const
-    PrincipalVariation = require('./PrincipalVariation');
-
+import {PrincipalVariation} from "./PrincipalVariation";
 
 function MoveComputation(props) {
     this.plyClass = props.plyClass;
@@ -46,31 +43,31 @@ function MoveComputation(props) {
 }
 
 
-MoveComputation.prototype.getBestMove = function() {
+MoveComputation.prototype.getBestMove = function () {
     return this.pv.getBestMove();
 };
 
-MoveComputation.prototype.answer = function() {
+MoveComputation.prototype.answer = function () {
     return null;
 };
 
-MoveComputation.prototype.process = function() {
-    if(this.done) {
+MoveComputation.prototype.process = function () {
+    if (this.done) {
         return true;
     }
 
     let Ply = this.plyClass;
 
-    if(!this.stack) {
-        if(this.iteration < this.maxDepth) {
+    if (!this.stack) {
+        if (this.iteration < this.maxDepth) {
             this.iteration += 1;
 
             this.stack = new Ply({
-                root:    true,
-                player:  this.player,
+                root: true,
+                player: this.player,
                 host: this,
-                gameState:  this.gameState,
-                depth:  this.iteration - 1
+                gameState: this.gameState,
+                depth: this.iteration - 1
             });
 
         } else {
@@ -85,9 +82,9 @@ MoveComputation.prototype.process = function() {
 };
 
 
-MoveComputation.prototype.execute = function(steps) {
+MoveComputation.prototype.execute = function (steps) {
     steps = steps || 1;
-    while(steps > 0 && !this.done) {
+    while (steps > 0 && !this.done) {
         this.process();
         steps -= 1;
     }
@@ -95,4 +92,4 @@ MoveComputation.prototype.execute = function(steps) {
     return this.done;
 };
 
-module.exports = MoveComputation;
+export {MoveComputation};

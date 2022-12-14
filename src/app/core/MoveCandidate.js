@@ -22,13 +22,10 @@
  * THE SOFTWARE.
  */
 
-function MoveCandidate(props) {
+export function MoveCandidate(props) {
     this.square = props.square;
     this.state = props.state;
     this.balance = props.state.balance;
     this.value = props.value;
     this.affinity = props.affinity;
 }
-
-
-module.exports = MoveCandidate;

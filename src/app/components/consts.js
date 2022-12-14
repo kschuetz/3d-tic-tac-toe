@@ -22,8 +22,7 @@
  * THE SOFTWARE.
  */
 
-
-module.exports = {
+export const consts = {
     xPieceScale:   0.86,
     oPieceScale:   1
 };

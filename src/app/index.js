@@ -23,17 +23,11 @@
  * THE SOFTWARE.
  */
 
-const
-    React = require('react'),
-    _ = require('lodash'),
-    Immutable = require('Immutable'),
-    $ = require('jquery'),
-    MainDriver = require('./core/MainDriver');
+import React from 'react';
+import {MainDriver} from './core/MainDriver';
+import AnimationFrame from "animation-frame";
 
-
-
-const sandbox1 = require('sandbox/sandbox1');
-
+AnimationFrame.shim();
 
 function main() {
     const
@@ -49,7 +43,18 @@ function main() {
 
 //$(document).ready(sandbox1);
 
-$(document).ready(main);
+function docReady(fn) {
+    // see if DOM is already available
+    if (document.readyState === "complete" || document.readyState === "interactive") {
+        // call on next available tick
+        setTimeout(fn, 1);
+    } else {
+        document.addEventListener("DOMContentLoaded", fn);
+    }
+}
+
+docReady(main);
+// $(document).ready(main);
 
 
 

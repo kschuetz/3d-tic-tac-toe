@@ -1,4 +1,3 @@
-
 /*
  * The MIT License (MIT)
  *
@@ -23,32 +22,27 @@
  * THE SOFTWARE.
  */
 
-const
-    React = require('react'),
-    _ = require('lodash');
-
-
+import React from "react";
 
 const HorizontalBeam = React.createClass({
     render() {
         const ht = this.props.thickness / 2;
         return React.DOM.rect({
-            x:     this.props.x - ht,
-            y:     this.props.y - ht,
-            width:  this.props.width + this.props.thickness,
+            x: this.props.x - ht,
+            y: this.props.y - ht,
+            width: this.props.width + this.props.thickness,
             height: this.props.thickness,
             className: 'plane-horizontal-beam'
         });
     }
 });
 
-
 const VerticalBeam = React.createClass({
     render() {
         const ht = this.props.thickness / 2;
         return React.DOM.rect({
-            x:     this.props.x - ht,
-            y:     this.props.y - ht,
+            x: this.props.x - ht,
+            y: this.props.y - ht,
             width: this.props.thickness,
             height: this.props.height + this.props.thickness,
             className: 'plane-vertical-beam'
@@ -56,22 +50,21 @@ const VerticalBeam = React.createClass({
     }
 });
 
-
 const FlatPlane = React.createClass({
     render() {
         let beams = [];
-        for(let i=0; i < 5; i += 1) {
+        for (let i = 0; i < 5; i += 1) {
             let hbeam = React.createElement(HorizontalBeam, {
-                key: 'h' + i,
-                x: -2,
-                y: i - 2,
-                width: 4,
-                thickness: 0.1
-            }),
+                    key: 'h' + i,
+                    x: -2,
+                    y: i - 2,
+                    width: 4,
+                    thickness: 0.1
+                }),
                 vbeam = React.createElement(VerticalBeam, {
                     key: 'v' + i,
-                    x:   i - 2,
-                    y:   -2,
+                    x: i - 2,
+                    y: -2,
                     height: 4,
                     thickness: 0.1
                 });
@@ -87,19 +80,18 @@ const FlatPlane = React.createClass({
     }
 });
 
-const Plane = React.createClass({
+export const Plane = React.createClass({
     render() {
         const depth = 0.05,
-              skew = this.props.skew || 0;
-        const topPlane = React.createElement(FlatPlane, { className: 'plane-top', transform: 'skewX(' + skew + ')'}),
-            bottomPlane = React.createElement(FlatPlane, { className: 'plane-bottom', transform: 'translate(0,' + depth + '),skewX(' + skew + ')'});
+            skew = this.props.skew || 0;
+        const topPlane = React.createElement(FlatPlane, {className: 'plane-top', transform: 'skewX(' + skew + ')'}),
+            bottomPlane = React.createElement(FlatPlane, {
+                className: 'plane-bottom',
+                transform: 'translate(0,' + depth + '),skewX(' + skew + ')'
+            });
 
         return React.DOM.g({
             transform: this.props.transform
         }, bottomPlane, topPlane);
     }
 });
-
-
-
-module.exports = Plane;

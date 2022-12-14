@@ -22,16 +22,15 @@
  * THE SOFTWARE.
  */
 
-const
-    PhysicalBoardState = require('./PhysicalBoardState'),
-    PhysicalSquareState = require('./PhysicalSquareState'),
-    AnimStates = require('./AnimStates');
+import {PhysicalBoardState} from "./PhysicalBoardState";
+import {PhysicalSquareState} from "./PhysicalSquareState";
+import {AnimStates} from "./AnimStates";
 
 /**
  * Derives a PhysicalBoardState from a GameState
  * @param gameState
  */
-function getPhysicalState(props, gameState) {
+export function getPhysicalState(props, gameState) {
     let humanCanMove = props && props.humanCanMove,
         lastMove = props.lastMove || -1,
         winningSquares = gameState.getWinningSquares();
@@ -61,6 +60,3 @@ function getPhysicalState(props, gameState) {
 
     return new PhysicalBoardState({ squares: squareMap });
 }
-
-
-module.exports = getPhysicalState;

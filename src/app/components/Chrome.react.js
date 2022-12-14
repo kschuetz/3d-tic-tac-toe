@@ -22,14 +22,11 @@
  * THE SOFTWARE.
  */
 
-
-const
-    React = require('react'),
-    consts = require('./consts'),
-    FlatX = require('./FlatX.react'),
-    FlatO = require('./FlatO.react'),
-    players = require('../core/players');
-
+import React from 'react';
+import {consts} from './consts';
+import {FlatX} from './FlatX.react';
+import {FlatO} from './FlatO.react';
+import {players} from '../core/players';
 
 const ChromeBackground = React.createClass({
 
@@ -63,9 +60,9 @@ const TurnIndicator = React.createClass({
             hst = st / 2;
 
         return React.DOM.polygon({
-            className:  'turn-indicator',
+            className: 'turn-indicator',
             points: `0,-${s} ${s},0 0,${s} 0,${hst} -${s},${hst} -${s},-${hst}, 0,-${hst}`,
-            transform:  this.props.transform
+            transform: this.props.transform
         });
     }
 });
@@ -98,41 +95,39 @@ const PlayerRow = React.createClass({
             height
         });
 
-
         let tiWidth = (height / 2) - 10,
             tiLeft = tiWidth - hw + 5;
 
         let turnIndicator = null;
-        if(isPlayerTurn) {
+        if (isPlayerTurn) {
             turnIndicator = React.createElement(TurnIndicator, {
-                scale:  tiWidth,
+                scale: tiWidth,
                 transform: `translate(${tiLeft}, 0)`
             });
         }
 
         const
-              iconMultiplier = isOPlayer ? consts.oPieceScale : consts.xPieceScale,
-              iconWidth = height * 0.8,
-              iconScale = iconWidth * iconMultiplier,
-              iconLeft = tiLeft + tiWidth + 5 + (iconWidth / 2);
+            iconMultiplier = isOPlayer ? consts.oPieceScale : consts.xPieceScale,
+            iconWidth = height * 0.8,
+            iconScale = iconWidth * iconMultiplier,
+            iconLeft = tiLeft + tiWidth + 5 + (iconWidth / 2);
 
         const pieceIcon = React.createElement(iconClass, {
-            className:  iconCss,
+            className: iconCss,
             transform: `translate(${iconLeft},0),scale(${iconScale})`
         });
 
         let nameLabel = null;
 
         return React.DOM.g({
-            transform:  this.props.transform
+            transform: this.props.transform
         }, background, pieceIcon, turnIndicator, nameLabel);
     }
 
 
 });
 
-
-const Chrome = React.createClass({
+export const Chrome = React.createClass({
 
     render() {
         let sceneFrameProperties = this.props.sceneFrameProperties,
@@ -142,7 +137,7 @@ const Chrome = React.createClass({
             chromeMargin = sceneFrameProperties.chromeMargin,
             height = sceneFrameProperties.height - 2 * chromeMargin;
 
-        let background = React.createElement(ChromeBackground, { width, height });
+        let background = React.createElement(ChromeBackground, {width, height});
 
         //let turnIndicator = React.createElement(TurnIndicator, {
         //    scale:  25,
@@ -150,15 +145,15 @@ const Chrome = React.createClass({
         //});
 
         let player1Row = React.createElement(PlayerRow, {
-            player:  players.X,
-            isPlayerTurn:   playerTurn === players.X,
-            transform:  'translate(0, -350)'
+            player: players.X,
+            isPlayerTurn: playerTurn === players.X,
+            transform: 'translate(0, -350)'
         });
 
         let player2Row = React.createElement(PlayerRow, {
-            player:  players.O,
-            isPlayerTurn:  playerTurn === players.O,
-            transform:  'translate(0, -270)'
+            player: players.O,
+            isPlayerTurn: playerTurn === players.O,
+            transform: 'translate(0, -270)'
         });
 
         return React.DOM.g({
@@ -166,5 +161,3 @@ const Chrome = React.createClass({
         }, background, player1Row, player2Row);
     }
 });
-
-module.exports = Chrome;

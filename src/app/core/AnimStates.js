@@ -23,7 +23,7 @@
  * THE SOFTWARE.
  */
 
-module.exports = {
+export const AnimStates = {
     SPAWNING:   1,
     HIGHLIGHTED: 2,
     FLASHING:   3

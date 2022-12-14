@@ -1,4 +1,3 @@
-
 /*
  * The MIT License (MIT)
  *
@@ -23,9 +22,8 @@
  * THE SOFTWARE.
  */
 
-const Immutable = require('Immutable'),
-      AnimStates = require('./AnimStates');
-
+import Immutable from "Immutable";
+import {AnimStates} from "./AnimStates";
 
 const PhysicalSquareState = Immutable.Record({
     pieceType: 0,       // 0, 1, or -1
@@ -70,17 +68,17 @@ PhysicalSquareState.nonClickableEmpty = defaultState.set('clickable', false);
 
 
 PhysicalSquareState.xPiece = new PhysicalSquareState({
-    pieceType:  1,
-    clickable:  false
+    pieceType: 1,
+    clickable: false
 });
 
 PhysicalSquareState.oPiece = new PhysicalSquareState({
-    pieceType:  -1,
-    clickable:  false
+    pieceType: -1,
+    clickable: false
 });
 
-PhysicalSquareState.playerPiece = function(playerIndex) {
-    if(playerIndex > 0) {
+PhysicalSquareState.playerPiece = function (playerIndex) {
+    if (playerIndex > 0) {
         return PhysicalSquareState.xPiece;
     } else if (playerIndex < 0) {
         return PhysicalSquareState.oPiece;
@@ -89,4 +87,4 @@ PhysicalSquareState.playerPiece = function(playerIndex) {
     }
 };
 
-module.exports = PhysicalSquareState;
+export {PhysicalSquareState};

@@ -1,4 +1,3 @@
-
 /*
  * The MIT License (MIT)
  *
@@ -23,9 +22,7 @@
  * THE SOFTWARE.
  */
 
-const
-    players = require('./players');
-
+import {players} from "./players";
 
 const
     winValue = 100000,
@@ -52,7 +49,7 @@ const stalemate = {
         return false;
     },
 
-    isWin:  false
+    isWin: false
 };
 
 function isThisPlayer(playerIndex) {
@@ -64,11 +61,11 @@ function Win(playerIndex) {
     this.description = players.pieceName(playerIndex) + ' win';
 }
 
-Win.prototype.play = function() {
+Win.prototype.play = function () {
     return this;
 };
 
-Win.prototype.score = function(playerIndex) {
+Win.prototype.score = function (playerIndex) {
     return playerIndex === this.playerIndex ? winValue : 0;
 };
 
@@ -83,19 +80,19 @@ function Combo(playerIndex, score, nextState, description) {
     this.description = description;
 }
 
-Combo.prototype.play = function(playerIndex) {
-    if(playerIndex === this.playerIndex) {
+Combo.prototype.play = function (playerIndex) {
+    if (playerIndex === this.playerIndex) {
         return this.nextState;
     } else {
         return stalemate;
     }
 };
 
-Combo.prototype.score = function(playerIndex) {
+Combo.prototype.score = function (playerIndex) {
     return playerIndex === this.playerIndex ? this._score : 0;
 };
 
-Combo.prototype.isWinFor = function() {
+Combo.prototype.isWinFor = function () {
     return false;
 };
 
@@ -114,7 +111,7 @@ const
 
 const empty = {
     play(playerIndex) {
-        if(playerIndex === players.X) {
+        if (playerIndex === players.X) {
             return x1;
         } else {
             return o1;
@@ -133,11 +130,10 @@ const empty = {
         return true;
     },
 
-    isWin:   false
+    isWin: false
 };
 
-
-module.exports = {
+export const solutionStates = {
     empty,
     x1,
     x2,

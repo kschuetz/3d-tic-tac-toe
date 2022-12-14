@@ -1,4 +1,3 @@
-
 /*
  * The MIT License (MIT)
  *
@@ -23,19 +22,19 @@
  * THE SOFTWARE.
  */
 
-const Immutable = require('Immutable'),
-      _ = require('lodash'),
-      PhysicalSquareState = require('./PhysicalSquareState');
+import Immutable from "Immutable";
+import _ from "lodash";
+import {PhysicalSquareState} from "./PhysicalSquareState";
 
 const defaultSquareState = PhysicalSquareState.defaultState,
-      baseSquareMap = Immutable.Map();
+    baseSquareMap = Immutable.Map();
 
 function PhysicalBoardState(props) {
-    if(false === (this instanceof PhysicalBoardState)) {
+    if (false === (this instanceof PhysicalBoardState)) {
         return new PhysicalBoardState(props);
     }
 
-    if(props && props.squares) {
+    if (props && props.squares) {
         this._squares = props.squares;
     } else {
         this._squares = baseSquareMap;
@@ -44,7 +43,7 @@ function PhysicalBoardState(props) {
 
 
 function checkDimension(x) {
-    if(x >= 0 && x <= 3) {
+    if (x >= 0 && x <= 3) {
         return x;
     } else {
         throw new Error('dimension out of range: ' + x);
@@ -55,38 +54,38 @@ function getSquareIndex(plane, row, col) {
     return 16 * checkDimension(plane) + 4 * checkDimension(row) + checkDimension(col);
 }
 
-PhysicalBoardState.prototype.withNewSquares = function(squares) {
-    return new PhysicalBoardState({ squares });
+PhysicalBoardState.prototype.withNewSquares = function (squares) {
+    return new PhysicalBoardState({squares});
 };
 
-PhysicalBoardState.prototype.getSquare = function(plane, row, col) {
+PhysicalBoardState.prototype.getSquare = function (plane, row, col) {
     let index = getSquareIndex(plane, row, col),
         square = this._squares.get(index);
 
-    if(!square) {
+    if (!square) {
         return defaultSquareState;
     } else {
         return square;
     }
 };
 
-PhysicalBoardState.prototype.updateSquare = function(plane, row, col, f) {
+PhysicalBoardState.prototype.updateSquare = function (plane, row, col, f) {
     let index = getSquareIndex(plane, row, col),
         square = this._squares.get(index);
 
-    if(!square) {
+    if (!square) {
         let newSquare = f(defaultSquareState);
-        if(newSquare && !Immutable.is(newSquare, defaultSquareState)) {
+        if (newSquare && !Immutable.is(newSquare, defaultSquareState)) {
             return this.withNewSquares(this._squares.set(index, newSquare));
         } else {
             return this;
         }
     } else {
         let newSquare = f(square);
-        if(newSquare) {
-            if(Immutable.is(newSquare, defaultSquareState)) {
+        if (newSquare) {
+            if (Immutable.is(newSquare, defaultSquareState)) {
                 return this.withNewSquares(this._squares.remove(index));
-            } else if(Immutable.is(newSquare, square)) {
+            } else if (Immutable.is(newSquare, square)) {
                 return this;
             } else {
                 return this.withNewSquares(this._squares.set(index, newSquare));
@@ -101,7 +100,7 @@ PhysicalBoardState.prototype.updateSquare = function(plane, row, col, f) {
 Object.defineProperty(PhysicalBoardState.prototype, 'isAnimating', {
     get() {
         let result = this._isAnimating;
-        if(_.isUndefined(result)) {
+        if (_.isUndefined(result)) {
             result = this._squares.some(s => s.isAnimating);
 
             this._isAnimating = result;
@@ -110,30 +109,30 @@ Object.defineProperty(PhysicalBoardState.prototype, 'isAnimating', {
     }
 });
 
-PhysicalBoardState.readFromString = function(s) {
+PhysicalBoardState.readFromString = function (s) {
     let len = (s && s.length) || 0;
-    if(len > 64) {
+    if (len > 64) {
         len = 64;
     }
     let squares = baseSquareMap;
-    for(let i = 0; i < len; i += 1) {
+    for (let i = 0; i < len; i += 1) {
         let c = s.charAt(i);
-        if(c === 'x' || c === 'X') {
+        if (c === 'x' || c === 'X') {
             squares = squares.set(i, PhysicalSquareState.xPiece);
         } else if (c === 'o' || c === 'O') {
             squares = squares.set(i, PhysicalSquareState.oPiece);
         }
     }
-    return new PhysicalBoardState({ squares });
+    return new PhysicalBoardState({squares});
 };
 
-PhysicalBoardState.prototype.writeToString = function() {
+PhysicalBoardState.prototype.writeToString = function () {
     let result = [];
-    for(let i = 0; i < 64; i += 1) {
+    for (let i = 0; i < 64; i += 1) {
         let square = this._squares.get(i),
             pieceType = (square || defaultSquareState).pieceType;
 
-        if(pieceType === 1) {
+        if (pieceType === 1) {
             result.push('x');
         } else if (pieceType === 2) {
             result.push('o');
@@ -150,4 +149,4 @@ PhysicalBoardState.emptyBoard = new PhysicalBoardState();
 
 PhysicalBoardState.baseSquareMap = baseSquareMap;
 
-module.exports = PhysicalBoardState;
+export {PhysicalBoardState};

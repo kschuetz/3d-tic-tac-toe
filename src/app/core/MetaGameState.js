@@ -22,22 +22,19 @@
  * THE SOFTWARE.
  */
 
-const
-    _ = require('lodash'),
-    Immutable = require('Immutable'),
-    GameState = require('./GameState'),
-    phaseCodes = require('./phaseCodes'),
-    players = require('./players');
-
+import Immutable from "Immutable";
+import {GameState} from "./GameState";
+import {phaseCodes} from "./phaseCodes";
+import {players} from "./players";
 
 const MetaGameState = Immutable.Record({
-    gameState:     GameState.defaultGameState,
-    phase:         phaseCodes.INIT,
-    lastMove:      -1,
-    playerTurn:    players.X
+    gameState: GameState.defaultGameState,
+    phase: phaseCodes.INIT,
+    lastMove: -1,
+    playerTurn: players.X
 });
 
-MetaGameState.prototype.flipPlayerTurn = function() {
+MetaGameState.prototype.flipPlayerTurn = function () {
     let playerTurn = this.playerTurn;
     return this.set('playerTurn', players.opposite(playerTurn));
 };
@@ -70,4 +67,4 @@ Object.defineProperty(MetaGameState.prototype, 'isGameStarted', {
     enumerable: true
 });
 
-module.exports = MetaGameState;
+export {MetaGameState};

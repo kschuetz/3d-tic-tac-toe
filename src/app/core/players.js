@@ -42,8 +42,7 @@ function pieceName(playerIndex) {
     }
 }
 
-
-module.exports = {
+export const players = {
     X:   PLAYER_X,
     O:   PLAYER_O,
 

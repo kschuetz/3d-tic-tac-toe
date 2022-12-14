@@ -1,5 +1,3 @@
-
-
 /*
  * The MIT License (MIT)
  *
@@ -24,27 +22,21 @@
  * THE SOFTWARE.
  */
 
-const
-    _ = require('lodash'),
-    generateSquarePreferences = require('./generateSquarePreferences'),
-    PrincipalVariation = require('./PrincipalVariation'),
-    MoveComputation = require('./MoveComputation'),
-    GameState = require('./GameState'),
-    Ply = require('./Ply'),
-    MoveResponse = require('./MoveResponse');
+import _ from "lodash";
 
+import {generateSquarePreferences} from "./generateSquarePreferences";
+import {MoveComputation} from "./MoveComputation";
+import {Ply} from "./Ply";
+import {MoveResponse} from "./MoveResponse";
 
 const
     defaultStepsPerTick = 20000,
     defaultDelayBetweenTicks = 1;       // higher is slower but gives the browser more breathing room
 
-
-
-
 function ComputerPlayer(props) {
     this.stepsPerTick = props.stepsPerTick || defaultStepsPerTick;
     this.playerIndex = props.playerIndex || -1;
-    if(_.isUndefined(props.delayBetweenTicks)) {
+    if (_.isUndefined(props.delayBetweenTicks)) {
         this.delayBetweenTicks = defaultDelayBetweenTicks;
     } else {
         this.delayBetweenTicks = props.delayBetweenTicks;
@@ -52,7 +44,7 @@ function ComputerPlayer(props) {
     this.favoriteSquares = generateSquarePreferences();
 
     let squarePrefs = new Array(64);
-    for(let i = 0; i < 64; i += 1) {
+    for (let i = 0; i < 64; i += 1) {
         let square = this.favoriteSquares[i];
         squarePrefs[square] = 64 - i;
     }
@@ -61,7 +53,7 @@ function ComputerPlayer(props) {
 }
 
 
-ComputerPlayer.prototype.makeMove = function(gameState, asPlayer) {
+ComputerPlayer.prototype.makeMove = function (gameState, asPlayer) {
     let self = this,
         interrupted = false,
         startTime = new Date().getTime();
@@ -74,44 +66,44 @@ ComputerPlayer.prototype.makeMove = function(gameState, asPlayer) {
             let endTime = new Date().getTime(),
                 response = new MoveResponse({
                     square,
-                    timeTaken:  endTime - startTime,
+                    timeTaken: endTime - startTime,
                     interrupted
                 });
             resolve(response);
         }
 
         let occupied = gameState.getOccupiedSquareCount();
-        if(occupied < 1) {
+        if (occupied < 1) {
             // first move just picks a random of the strongest squares
             deliverMove(self.favoriteSquares[0]);
             return;
         }
 
         let maxDepth;
-        if(occupied < 3) {
+        if (occupied < 3) {
             maxDepth = 2;
-        } else if(occupied < 8) {
+        } else if (occupied < 8) {
             maxDepth = 3;
-        } else if(occupied < 32) {
+        } else if (occupied < 32) {
             maxDepth = 4;
         } else {
             maxDepth = 5;
         }
 
         let computation = new MoveComputation({
-            plyClass:  Ply,
+            plyClass: Ply,
             maxDepth,
-            player:   asPlayer,
+            player: asPlayer,
             gameState,
-            squarePrefScores:  this.squarePrefScores
+            squarePrefScores: this.squarePrefScores
         });
 
-        let step = function() {
+        let step = function () {
             computation.execute(self.stepsPerTick);
-            if(interrupted) {
+            if (interrupted) {
                 computation.done = true;
             }
-            if(computation.done) {
+            if (computation.done) {
                 let bestMove = computation.getBestMove();
 
                 console.log('pv:');
@@ -127,16 +119,15 @@ ComputerPlayer.prototype.makeMove = function(gameState, asPlayer) {
     });
 
     return {
-        interrupt:  function() {
+        interrupt: function () {
             interrupted = true;
         },
 
-        result:  p
+        result: p
     };
 };
 
 
 ComputerPlayer.prototype.isComputerPlayer = true;
 
-
-module.exports = ComputerPlayer;
+export {ComputerPlayer};

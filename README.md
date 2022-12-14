@@ -2,22 +2,28 @@
 
 WORK IN PROGRESS.
 
-http://kschuetz.github.io/3d-tic-tac-toe
+https://kschuetz.github.io/3d-tic-tac-toe
 
 
 # Build Instructions
+ 
+## Prerequisites
 
-`npm install`
+- [Node.js](https://nodejs.org "Node.js")
+- [pnpm](https://pnpm.io "pnpm")
+
+## First time setup
+
+- `pnpm install`
 
 ## Development
-
-- `gulp dev` - Compile dev version (output to `dev` directory)
-- `gulp dev-serve` - Open an instance of Browsersync pointing to dev build
+                
+- `pnpm run dev`
 
 ## Production
 
-- `gulp dist` - Compile dist version (output to `dist` directory)
-- `gulp dist-serve` - Open an instance of Browsersync pointing to dist build
+- `pnpm run build` - Compile production build (output to `dist` directory)
+- `pnpm run preview ` - Preview production build
 
 # License
 
@@ -42,5 +48,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
-

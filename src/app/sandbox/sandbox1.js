@@ -1,4 +1,3 @@
-
 /*
  * The MIT License (MIT)
  *
@@ -23,38 +22,30 @@
  * THE SOFTWARE.
  */
 
-const
-    React = require('react'),
-    _ = require('lodash'),
-    Immutable = require('Immutable');
+import React from "react";
 
-const
-    XPiece = require('../components/XPiece.react'),
-    OPiece = require('../components/OPiece.react'),
-    Plane = require('../components/Plane.react'),
-    GameBoard = require('../components/GameBoard.react'),
-    PhysicalBoardState = require('../core/PhysicalBoardState'),
-    solutionMap = require('../core/solutionMap'),
-    GameState = require('../core/GameState'),
-    ComputerPlayer = require('../core/ComputerPlayer'),
-    generateSquarePreferences = require('../core/generateSquarePreferences'),
-    BoardContents = require('../core/BoardContents'),
-    Chrome = require('../components/Chrome.react'),
-    SceneFrame = require('../components/SceneFrame.react'),
-    SceneFrameProperties = require('../core/SceneFrameProperties');
+import {XPiece} from '../components/XPiece.react';
+import {OPiece} from '../components/OPiece.react';
+import {Plane} from '../components/Plane.react';
+import {GameBoard} from '../components/GameBoard.react';
+import {PhysicalBoardState} from '../core/PhysicalBoardState';
+import {solutionMap} from '../core/solutionMap';
+import {GameState} from '../core/GameState';
+import {ComputerPlayer} from '../core/ComputerPlayer';
+import {BoardContents} from '../core/BoardContents';
+import {Chrome} from '../components/Chrome.react';
+import {SceneFrame} from '../components/SceneFrame.react';
+import {SceneFrameProperties} from '../core/SceneFrameProperties';
 
-
-
-
-const computerPlayerTests = (function() {
+const computerPlayerTests = (function () {
     function test2() {
-        let player1 = new ComputerPlayer({ playerIndex: 1}),
-            player2 = new ComputerPlayer({ playerIndex: -1});
+        let player1 = new ComputerPlayer({playerIndex: 1}),
+            player2 = new ComputerPlayer({playerIndex: -1});
 
 
         function printGameState(gameState) {
             console.log(gameState.contents.getDebugString());
-            if(gameState.gameOver) {
+            if (gameState.gameOver) {
                 let winningSquares = gameState.getWinningSquares();
                 console.log(winningSquares.toJS());
             }
@@ -63,7 +54,7 @@ const computerPlayerTests = (function() {
         function turn(xToMove, state) {
             let player = xToMove ? player1 : player2;
             console.log(player);
-            if(state.gameOver) {
+            if (state.gameOver) {
                 console.log('game over');
                 printGameState(state);
                 return;
@@ -91,11 +82,10 @@ const computerPlayerTests = (function() {
 })();
 
 
-
 function printInfo() {
-    for(let z = 0; z < 4; z += 1) {
-        for(let y = 0; y < 4; y += 1) {
-            for(let x = 0; x < 4; x += 1) {
+    for (let z = 0; z < 4; z += 1) {
+        for (let y = 0; y < 4; y += 1) {
+            for (let x = 0; x < 4; x += 1) {
                 let squareIndex = 16 * z + 4 * y + x,
                     solutions = solutionMap.getSolutionsForSquare(squareIndex);
 
@@ -112,9 +102,9 @@ function boardContentsTest() {
     let b = new BoardContents();
 
     b = b.setPlayerAt(22, 1)
-         .setPlayerAt(23, -1)
-         .setPlayerAt(0, 1)
-         .setPlayerAt(63, -1);
+        .setPlayerAt(23, -1)
+        .setPlayerAt(0, 1)
+        .setPlayerAt(63, -1);
 
     console.log(b.getDebugString());
 
@@ -140,7 +130,6 @@ function test1() {
     console.log(state);
 }
 
-
 function runSandbox() {
     console.log('in sandbox 1');
 
@@ -152,22 +141,22 @@ function runSandbox() {
 
     const testBoardState1 = PhysicalBoardState.readFromString('xo..xxooxox..xx.xx.oooo.xo..o.o.ooxo.oxo.oo..x.xx.xxx.xx.xoxx.x.');
 
-    const xPiece = React.createElement(XPiece, { transform: 'skewX(-30)'}),
-          oPiece = React.createElement(OPiece, { transform: 'translate(1.5,0),skewX(-30)'}),
-          plane = React.createElement(Plane, { transform: 'skewX(0)'}),
-          board1 = React.createElement(GameBoard, {
-              skew: -30,
-              boardState:  testBoardState1,
-              onClickSquare:  data => {
-                  console.log('square clicked:');
-                  console.log(data);
-              }
-          });
+    const xPiece = React.createElement(XPiece, {transform: 'skewX(-30)'}),
+        oPiece = React.createElement(OPiece, {transform: 'translate(1.5,0),skewX(-30)'}),
+        plane = React.createElement(Plane, {transform: 'skewX(0)'}),
+        board1 = React.createElement(GameBoard, {
+            skew: -30,
+            boardState: testBoardState1,
+            onClickSquare: data => {
+                console.log('square clicked:');
+                console.log(data);
+            }
+        });
 
     const backdrop = React.DOM.rect({
         className: 'backdrop',
-        x:0,
-        y:0,
+        x: 0,
+        y: 0,
         width: 100000,
         height: 100000
     });
@@ -184,8 +173,8 @@ function runSandbox() {
 
     let sceneFrame1 = React.createElement(SceneFrame, {
         sceneFrameProperties,
-        boardState:  testBoardState1,
-        onClickSquare:  data => {
+        boardState: testBoardState1,
+        onClickSquare: data => {
             console.log('square clicked:');
             console.log(data);
         }
@@ -204,14 +193,4 @@ function runSandbox() {
     computerPlayerTests.test2();
 }
 
-
-
-
-
-
-
-
-
-
-
-module.exports = runSandbox;
+export {runSandbox};

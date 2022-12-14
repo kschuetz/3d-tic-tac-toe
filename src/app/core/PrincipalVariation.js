@@ -1,4 +1,3 @@
-
 /*
  * The MIT License (MIT)
  *
@@ -29,7 +28,7 @@ function PrincipalVariation(depth) {
     let size = (depth * depth);
 
     let line = new Array(size);
-    for(let i = 0; i < size; i += 1) {
+    for (let i = 0; i < size; i += 1) {
         line[i] = -1;
     }
 
@@ -37,20 +36,20 @@ function PrincipalVariation(depth) {
 }
 
 
-PrincipalVariation.prototype.getBestMove = function(ply) {
+PrincipalVariation.prototype.getBestMove = function (ply) {
     ply = ply || 0;
     return this.line[ply];
 };
 
-PrincipalVariation.prototype.updateBestMove = function(ply, value) {
+PrincipalVariation.prototype.updateBestMove = function (ply, value) {
     let baseIndex = ply * this.depth;
     this.line[baseIndex] = value;
-    if(ply < this.depth - 1) {
+    if (ply < this.depth - 1) {
         let dest = baseIndex + 1,
             source = baseIndex + this.depth,
             copyCount = this.depth - ply - 1;
 
-        while(copyCount > 0) {
+        while (copyCount > 0) {
             this.line[dest] = this.line[source];
             source += 1;
             dest += 1;
@@ -59,8 +58,8 @@ PrincipalVariation.prototype.updateBestMove = function(ply, value) {
     }
 };
 
-PrincipalVariation.prototype.debugGetLine = function() {
+PrincipalVariation.prototype.debugGetLine = function () {
     return this.line.slice(0, this.depth);
 };
 
-module.exports = PrincipalVariation;
+export {PrincipalVariation};

@@ -1,4 +1,3 @@
-
 /*
  * The MIT License (MIT)
  *
@@ -23,12 +22,8 @@
  * THE SOFTWARE.
  */
 
-const
-    Immutable = require('Immutable');
+import Immutable from "Immutable";
 
-function Solution(a, b, c, d) {
+export function Solution(a, b, c, d) {
     this.squares = Immutable.List([a, b, c, d]);
 }
-
-
-module.exports = Solution;

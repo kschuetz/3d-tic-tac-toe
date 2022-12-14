@@ -1,4 +1,3 @@
-
 /*
  * The MIT License (MIT)
  *
@@ -23,8 +22,8 @@
  * THE SOFTWARE.
  */
 
-const _ = require('lodash'),
-      MoveCandidate = require('./MoveCandidate');
+import _ from "lodash";
+import {MoveCandidate} from "./MoveCandidate";
 
 function generateMoves(gameState, squarePrefs, player, pvMove) {
     let result = [],
@@ -32,19 +31,19 @@ function generateMoves(gameState, squarePrefs, player, pvMove) {
 
     //pvMove = -1;
 
-    if(pvMove >= 0 && gameState.isSquareEmpty(pvMove)) {
+    if (pvMove >= 0 && gameState.isSquareEmpty(pvMove)) {
         result.push(pvMove);
 
-        for(let i = 0; i < len; i += 1) {
+        for (let i = 0; i < len; i += 1) {
             let square = squarePrefs[i];
-            if(square !== pvMove && gameState.isSquareEmpty(square)) {
+            if (square !== pvMove && gameState.isSquareEmpty(square)) {
                 result.push(square);
             }
         }
     } else {
-        for(let i = 0; i < len; i += 1) {
+        for (let i = 0; i < len; i += 1) {
             let square = squarePrefs[i];
-            if(gameState.isSquareEmpty(square)) {
+            if (gameState.isSquareEmpty(square)) {
                 result.push(square);
             }
         }
@@ -56,7 +55,7 @@ function generateMoves(gameState, squarePrefs, player, pvMove) {
 
 function moveSort1(moveA, moveB) {
     let result = moveB.balance - moveA.balance;
-    if(result === 0) {
+    if (result === 0) {
         result = moveB.affinity - moveA.affinity;
     }
     return result;
@@ -64,7 +63,7 @@ function moveSort1(moveA, moveB) {
 
 function moveSort2(moveA, moveB) {
     let result = moveA.balance - moveB.balance;
-    if(result === 0) {
+    if (result === 0) {
         result = moveB.affinity - moveA.affinity;
     }
     return result;
@@ -74,17 +73,17 @@ function generateMovesSorted(gameState, squarePrefScores, player, pvMove) {
     let moves = [],
         firstMove = null;
 
-    for(let square = 0; square < 64; square += 1) {
-        if(gameState.isSquareEmpty(square)) {
+    for (let square = 0; square < 64; square += 1) {
+        if (gameState.isSquareEmpty(square)) {
             let state = gameState.placePiece(square, player),
                 move = new MoveCandidate({
                     state,
                     square,
-                    balance:     state.balance,
-                    value:       player * state.balance,
-                    affinity:  squarePrefScores[square]
+                    balance: state.balance,
+                    value: player * state.balance,
+                    affinity: squarePrefScores[square]
                 });
-            if(pvMove === square) {
+            if (pvMove === square) {
                 firstMove = move;
             } else {
                 moves.push(move);
@@ -96,15 +95,15 @@ function generateMovesSorted(gameState, squarePrefScores, player, pvMove) {
         best = Number.NEGATIVE_INFINITY,
         bestIndex = -1;
 
-    for(let i = 0; i < moveCount; i += 1) {
+    for (let i = 0; i < moveCount; i += 1) {
         let move = moves[i];
-        if(move.value > best) {
+        if (move.value > best) {
             best = move.value;
             bestIndex = i;
         }
     }
 
-    if(bestIndex >= 0) {
+    if (bestIndex >= 0) {
         let move = moves[bestIndex];
         moves.splice(bestIndex, 1);
         moves.unshift(move);
@@ -115,13 +114,12 @@ function generateMovesSorted(gameState, squarePrefScores, player, pvMove) {
 
     moves = _.sortBy(moves, sortFn);
 
-    if(firstMove) {
+    if (firstMove) {
         moves.unshift(firstMove);
     }
     return moves; //.map(m => m.square);
 
 }
-
 
 
 function Ply(props) {
@@ -138,14 +136,14 @@ function Ply(props) {
     this.host = host;
 
     let pvMove = -1;
-    if(left) {
+    if (left) {
         pvMove = pv.getBestMove(props.ply);
     }
 
     this.depth = props.depth;
     this.gameState = props.gameState;
 
-    if(root) {
+    if (root) {
         this.moves = generateMovesSorted(props.gameState, squarePrefScores, this.player, pvMove);
         //console.log('move sorted:');
         //console.log(this.moves);
@@ -156,7 +154,7 @@ function Ply(props) {
     this.moveCount = this.moves.length;
     this.nextMovePtr = 0;
 
-    if(root) {
+    if (root) {
         this.alpha = Number.NEGATIVE_INFINITY;
         this.beta = Number.POSITIVE_INFINITY;
         this.parent = host;
@@ -170,8 +168,8 @@ function Ply(props) {
 }
 
 
-Ply.prototype.process = function() {
-    if(this.nextMovePtr >= this.moveCount) {
+Ply.prototype.process = function () {
+    if (this.nextMovePtr >= this.moveCount) {
         return this.parent.answer(this.alpha);
     }
 
@@ -181,15 +179,15 @@ Ply.prototype.process = function() {
     this.nextMovePtr += 1;
 
     let newState = candidate.state; //this.gameState.placePiece(move, this.player);
-    if(newState.gameOver || this.depth <= 0) {
+    if (newState.gameOver || this.depth <= 0) {
         let value = this.player * newState.balance;
-        if(value >= this.beta) {
+        if (value >= this.beta) {
 
             this.host.betaCutoffCount += 1;
 
             return this.parent.answer(this.beta);
         }
-        if(value > this.alpha) {
+        if (value > this.alpha) {
             this.alpha = value;
 
             this.host.alphaCutoffCount += 1;
@@ -204,26 +202,26 @@ Ply.prototype.process = function() {
 
     let nextPly = new Ply({
         host: this.host,
-        parent:  this,
-        gameState:  newState,
+        parent: this,
+        gameState: newState,
 
-        left:   this.left && this.nextMovePtr === 1,
-        depth:  this.depth - 1,
-        ply:    this.ply + 1,
+        left: this.left && this.nextMovePtr === 1,
+        depth: this.depth - 1,
+        ply: this.ply + 1,
         player: -this.player,
-        alpha:  -this.beta,
-        beta:   -this.alpha
+        alpha: -this.beta,
+        beta: -this.alpha
     });
 
     return nextPly.process();
 };
 
-Ply.prototype.answer = function(value) {
+Ply.prototype.answer = function (value) {
     value = -value;
-    if(value >= this.beta) {
+    if (value >= this.beta) {
         return this.parent.answer(this.beta);
     }
-    if(value > this.alpha) {
+    if (value > this.alpha) {
         this.alpha = value;
 
         this.host.pv.updateBestMove(this.ply, this.lastMove);
@@ -231,7 +229,4 @@ Ply.prototype.answer = function(value) {
     return this;
 };
 
-module.exports = Ply;
-
-
-
+export {Ply};

@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-module.exports = {
+export const phaseCodes = {
     INIT:                0,
     WAITING_FOR_HUMAN:   1,
     THINKING:            2,

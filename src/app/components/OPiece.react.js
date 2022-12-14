@@ -1,5 +1,3 @@
-
-
 /*
  * The MIT License (MIT)
  *
@@ -24,26 +22,22 @@
  * THE SOFTWARE.
  */
 
-const
-    React = require('react'),
-    FlatO = require('./FlatO.react'),
-    _ = require('lodash');
+import React from "react";
+import {FlatO} from "./FlatO.react";
 
-
-
-const OPiece = React.createClass({
+export const OPiece = React.createClass({
     render() {
         const depth = 0.05;
 
         const upperO = React.createElement(FlatO, {
-            className: 'o-piece-front',
-            transform: 'skewX(0)'
-        }),
+                className: 'o-piece-front',
+                transform: 'skewX(0)'
+            }),
 
-        lowerO = React.createElement(FlatO, {
-            className: 'o-piece-side',
-            transform: 'translate(0,' + depth + '),skewX(0)'
-        });
+            lowerO = React.createElement(FlatO, {
+                className: 'o-piece-side',
+                transform: 'translate(0,' + depth + '),skewX(0)'
+            });
 
         return React.DOM.g({
             transform: this.props.transform
@@ -52,7 +46,3 @@ const OPiece = React.createClass({
 
     }
 });
-
-
-
-module.exports = OPiece;

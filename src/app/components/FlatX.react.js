@@ -22,11 +22,7 @@
  * THE SOFTWARE.
  */
 
-const
-    React = require('react'),
-    _ = require('lodash');
-
-
+import React from 'react';
 
 const XLeg = React.createClass({
     render() {
@@ -40,22 +36,18 @@ const XLeg = React.createClass({
     }
 });
 
-
-const FlatX = React.createClass({
+export const FlatX = React.createClass({
     render() {
 
-        const leg1 = React.createElement(XLeg, { transform: 'skewX(45)'}),
-            leg2 = React.createElement(XLeg, { transform: 'skewX(-45)'});
+        const leg1 = React.createElement(XLeg, {transform: 'skewX(45)'}),
+            leg2 = React.createElement(XLeg, {transform: 'skewX(-45)'});
 
         return React.DOM.g({
-            className:  this.props.className,
+            className: this.props.className,
             transform: this.props.transform,
             fill: this.props.fill
         }, leg1, leg2);
 
     }
 
-
 });
-
-module.exports = FlatX;

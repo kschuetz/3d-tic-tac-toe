@@ -22,31 +22,29 @@
  * THE SOFTWARE.
  */
 
-const
-    React = require('react'),
-    Playfield = require('./Playfield.react'),
-    Chrome = require('./Chrome.react');
+import React from "react";
+import {Playfield} from "./PlayField.react";
+import {Chrome} from "./Chrome.react";
 
-
-const SceneFrame = React.createClass({
+export const SceneFrame = React.createClass({
 
     render() {
         const sceneFrameProperties = this.props.sceneFrameProperties,
-              playerTurn = this.props.playerTurn;
+            playerTurn = this.props.playerTurn;
 
         const backdrop = React.DOM.rect({
             className: 'backdrop',
-            x:0,
-            y:0,
+            x: 0,
+            y: 0,
             width: 100000,
             height: 100000
         });
 
         const playField = React.createElement(Playfield, {
             sceneFrameProperties,
-            t:           this.props.t,
-            boardState:  this.props.boardState,
-            onClickSquare:  this.props.onClickSquare
+            t: this.props.t,
+            boardState: this.props.boardState,
+            onClickSquare: this.props.onClickSquare
         });
 
         const chrome = React.createElement(Chrome, {
@@ -59,6 +57,3 @@ const SceneFrame = React.createClass({
     }
 
 });
-
-
-module.exports = SceneFrame;

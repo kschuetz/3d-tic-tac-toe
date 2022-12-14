@@ -1,4 +1,3 @@
-
 /*
  * The MIT License (MIT)
  *
@@ -23,9 +22,8 @@
  * THE SOFTWARE.
  */
 
-const
-    Immutable = require('Immutable'),
-    Solution = require('./Solution');
+import Immutable from "Immutable";
+import {Solution} from "./Solution";
 
 function SolutionMap() {
 
@@ -33,13 +31,13 @@ function SolutionMap() {
 
 
 // this is used heavily when evaluating the board so it should be fast
-SolutionMap.prototype.getSolutionsForSquare = function(squareIndex) {
+SolutionMap.prototype.getSolutionsForSquare = function (squareIndex) {
     return this._squares[squareIndex];
 };
 
 
 // this is only used in the UI so it does not need to be fast
-SolutionMap.prototype.getSquaresForSolution = function(solutionIndex) {
+SolutionMap.prototype.getSquaresForSolution = function (solutionIndex) {
     let solution = this._solutions.get(solutionIndex);
     return solution.squares;
 };
@@ -48,14 +46,14 @@ Object.defineProperty(SolutionMap.prototype, 'solutions', {
     get() {
         return this._solutions;
     },
-    enumerable:  true
+    enumerable: true
 });
 
 Object.defineProperty(SolutionMap.prototype, 'solutionCount', {
     get() {
         return this._solutions.size;
     },
-    enumerable:  true
+    enumerable: true
 });
 
 
@@ -64,7 +62,7 @@ function buildSolutionMap() {
         solutions = Immutable.List(),
         solutionIndex = 0;
 
-    for(let i = 0; i < 64; i += 1) {
+    for (let i = 0; i < 64; i += 1) {
         squaresToSolutions[i] = [];
     }
 
@@ -91,9 +89,9 @@ function buildSolutionMap() {
         addSolution(a, b, c, d);
     }
 
-    for(let i = 0; i < 4; i += 1) {
+    for (let i = 0; i < 4; i += 1) {
         let plane = i * 16;
-        for(let j = 0; j < 4; j += 1) {
+        for (let j = 0; j < 4; j += 1) {
             addGroup(plane + 4 * j, 1);  // x
             addGroup(plane + j, 4);      // y
             addGroup(4 * i + j, 16);    // z
@@ -122,10 +120,4 @@ function buildSolutionMap() {
     return result;
 }
 
-
-
-
-
-
-
-module.exports = buildSolutionMap();
+export const solutionMap = buildSolutionMap();

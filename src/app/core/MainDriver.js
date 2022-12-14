@@ -22,15 +22,13 @@
  * THE SOFTWARE.
  */
 
-const _ = require('lodash'),
-      React = require('react'),
-      Immutable = require('Immutable'),
-      SceneFrame = require('../components/SceneFrame.react'),
-      SceneFrameProperties = require('./SceneFrameProperties'),
-      PhysicalBoardState = require('./PhysicalBoardState'),
-      getPhysicalState = require('./getPhysicalState'),
-      Game = require('./Game'),
-      ComputerPlayer = require('./ComputerPlayer');
+import React from "react";
+import {Game} from "./Game";
+import {ComputerPlayer} from "./ComputerPlayer";
+import {getPhysicalState} from "./getPhysicalState";
+import {PhysicalBoardState} from "./PhysicalBoardState";
+import {SceneFrameProperties} from "./SceneFrameProperties";
+import {SceneFrame} from '../components/SceneFrame.react';
 
 function MainDriver(props) {
     this.host = props.host;
@@ -40,11 +38,11 @@ function MainDriver(props) {
     this.boardState = PhysicalBoardState.emptyBoard;
 }
 
-MainDriver.prototype.handleMetaGameStateChange = function(metaGameState) {
+MainDriver.prototype.handleMetaGameStateChange = function (metaGameState) {
     let physicalState = getPhysicalState({
-            humanCanMove:   metaGameState.isWaitingForHuman,
-            lastMove:       metaGameState.lastMove
-        }, metaGameState.gameState);
+        humanCanMove: metaGameState.isWaitingForHuman,
+        lastMove: metaGameState.lastMove
+    }, metaGameState.gameState);
 
     console.log(metaGameState.gameState.balance);
 
@@ -54,35 +52,35 @@ MainDriver.prototype.handleMetaGameStateChange = function(metaGameState) {
 };
 
 
-MainDriver.prototype.handleSquareClicked = function(data) {
+MainDriver.prototype.handleSquareClicked = function (data) {
     console.log('square clicked:');
     console.log(data);
-    if(this.game) {
+    if (this.game) {
         let squareIndex = 16 * data.planeIndex + 4 * data.rowIndex + data.colIndex;
         this.game.submitMove(squareIndex);
     }
 };
 
-MainDriver.prototype.handleAnimationFrame = function(t) {
+MainDriver.prototype.handleAnimationFrame = function (t) {
     let frame = React.createElement(SceneFrame, {
-        sceneFrameProperties:  this.sceneFrameProperties,
+        sceneFrameProperties: this.sceneFrameProperties,
         t,
-        playerTurn:  this.playerTurn,
-        boardState:  this.boardState,
-        onClickSquare:  this.handleSquareClicked.bind(this)
+        playerTurn: this.playerTurn,
+        boardState: this.boardState,
+        onClickSquare: this.handleSquareClicked.bind(this)
     });
 
     React.render(frame, this.host);
 
-    if(this.boardState.isAnimating) {
+    if (this.boardState.isAnimating) {
         this.invalidate();
     }
 };
 
 
-MainDriver.prototype.invalidate = function() {
-    if(this.running) {
-        if(this.updateLevel > 0) {
+MainDriver.prototype.invalidate = function () {
+    if (this.running) {
+        if (this.updateLevel > 0) {
             this.dirty = true;
         } else {
             window.requestAnimationFrame(this.handleAnimationFrame.bind(this));
@@ -90,23 +88,23 @@ MainDriver.prototype.invalidate = function() {
     }
 };
 
-MainDriver.prototype.run = function() {
+MainDriver.prototype.run = function () {
     this.running = true;
     this.invalidate();
 };
 
-MainDriver.prototype.stop = function() {
+MainDriver.prototype.stop = function () {
     this.running = false;
 };
 
-MainDriver.prototype.beginUpdate = function() {
+MainDriver.prototype.beginUpdate = function () {
     this.updateLevel += 1;
 };
 
-MainDriver.prototype.endUpdate = function() {
+MainDriver.prototype.endUpdate = function () {
     this.updateLevel -= 1;
-    if(this.updateLevel === 0) {
-        if(this.dirty) {
+    if (this.updateLevel === 0) {
+        if (this.dirty) {
             this.dirty = false;
             this.invalidate();
         }
@@ -116,9 +114,9 @@ MainDriver.prototype.endUpdate = function() {
 };
 
 
-MainDriver.prototype.runSandboxGame = function() {
+MainDriver.prototype.runSandboxGame = function () {
     let player1 = null,   //new ComputerPlayer({ playerIndex: 1}),
-        player2 = new ComputerPlayer({ playerIndex: -1});
+        player2 = new ComputerPlayer({playerIndex: -1});
 
     let game = new Game({
         player1, player2, onStateChange: this.handleMetaGameStateChange.bind(this)
@@ -128,4 +126,4 @@ MainDriver.prototype.runSandboxGame = function() {
     game.start();
 };
 
-module.exports = MainDriver;
+export {MainDriver};

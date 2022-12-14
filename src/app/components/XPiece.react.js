@@ -1,4 +1,3 @@
-
 /*
  * The MIT License (MIT)
  *
@@ -23,49 +22,44 @@
  * THE SOFTWARE.
  */
 
-const
-    React = require('react'),
-    FlatX = require('./FlatX.react'),
-    _ = require('lodash');
+import React from "react";
+import {FlatX} from "./FlatX.react"
 
-
-
-
-const XPiece = React.createClass({
+export const XPiece = React.createClass({
     render() {
         const depth = 0.05;
 
         const
             topLeft = React.DOM.rect({
                 width: 0.34,
-                x:     -0.67,
-                y:     -0.5,
+                x: -0.67,
+                y: -0.5,
                 height: depth,
                 className: 'x-piece-side'
             }),
 
             topRight = React.DOM.rect({
                 width: 0.34,
-                x:     0.33,
-                y:     -0.5,
+                x: 0.33,
+                y: -0.5,
                 height: depth,
                 className: 'x-piece-side'
             }),
 
             bottomLeft = React.DOM.rect({
                 width: 0.34,
-                x:     -0.67,
-                y:     0.5,
+                x: -0.67,
+                y: 0.5,
                 height: depth,
-                className:  'x-piece-bottom'
+                className: 'x-piece-bottom'
             }),
 
             bottomRight = React.DOM.rect({
                 width: 0.34,
-                x:     0.33,
-                y:     0.5,
+                x: 0.33,
+                y: 0.5,
                 height: depth,
-                className:  'x-piece-bottom'
+                className: 'x-piece-bottom'
             }),
 
 
@@ -83,6 +77,3 @@ const XPiece = React.createClass({
         }, lowerX, topLeft, topRight, bottomLeft, bottomRight, upperX);
     }
 });
-
-
-module.exports = XPiece;

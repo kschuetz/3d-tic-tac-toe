@@ -1,4 +1,3 @@
-
 /*
  * The MIT License (MIT)
  *
@@ -25,13 +24,10 @@
 
 /*jshint bitwise: false*/
 
-
-const
-    Immutable = require('Immutable'),
-    solutionMap = require('./solutionMap'),
-    solutionStates = require('./solutionStates'),
-    BoardContents = require('./BoardContents');
-
+import Immutable from "Immutable";
+import {solutionMap} from "./solutionMap";
+import {solutionStates} from "./solutionStates";
+import {BoardContents} from "./BoardContents";
 
 const
     baseSolutionScores = Immutable.List(Immutable.Repeat(solutionStates.empty, solutionMap.solutionCount)),
@@ -52,7 +48,7 @@ function GameState(props) {
 }
 
 
-GameState.prototype.placePiece = function(squareIndex, player) {
+GameState.prototype.placePiece = function (squareIndex, player) {
     let solutionsForSquare = solutionMap.getSolutionsForSquare(squareIndex),
         balance = this.balance,
         opponent = -player,
@@ -61,7 +57,7 @@ GameState.prototype.placePiece = function(squareIndex, player) {
         contents = this.contents.setPlayerAt(squareIndex, player);
 
     let solutionCount = solutionsForSquare.length;
-    for(let i = 0; i < solutionCount; i += 1) {
+    for (let i = 0; i < solutionCount; i += 1) {
         let solutionIndex = solutionsForSquare[i],
             targetState = solutionScores.get(solutionIndex);
 
@@ -73,7 +69,7 @@ GameState.prototype.placePiece = function(squareIndex, player) {
         balance += player * newState.score(player);
         balance += opponent * newState.score(opponent);
 
-        if(newState.isWinFor(player)) {
+        if (newState.isWinFor(player)) {
             winner = player;
         }
 
@@ -88,41 +84,41 @@ GameState.prototype.placePiece = function(squareIndex, player) {
     });
 };
 
-GameState.prototype.isSquareOccupied = function(squareIndex) {
+GameState.prototype.isSquareOccupied = function (squareIndex) {
     return !this.contents.isSquareEmpty(squareIndex);
 };
 
-GameState.prototype.isSquareEmpty = function(squareIndex) {
+GameState.prototype.isSquareEmpty = function (squareIndex) {
     return this.contents.isSquareEmpty(squareIndex);
 };
 
 GameState.prototype.isLegalMove = GameState.prototype.isSquareEmpty;
 
-GameState.prototype.getPlayerAt = function(squareIndex) {
+GameState.prototype.getPlayerAt = function (squareIndex) {
     return this.contents.getPlayerAt(squareIndex);
 };
 
-GameState.prototype.getOccupiedSquareCount = function() {
+GameState.prototype.getOccupiedSquareCount = function () {
     return this.contents.getOccupiedSquareCount();
 };
 
-GameState.prototype.getOccupiedSquares = function() {
+GameState.prototype.getOccupiedSquares = function () {
     let result = [];
-    for(let i = 0; i < 64; i += 1) {
-        if(!this.contents.isSquareEmpty(i)) {
+    for (let i = 0; i < 64; i += 1) {
+        if (!this.contents.isSquareEmpty(i)) {
             result.push(i);
         }
     }
     return result;
 };
 
-GameState.prototype.getWinningSquares = function() {
-    if(this._winningSquares) {
+GameState.prototype.getWinningSquares = function () {
+    if (this._winningSquares) {
         return this._winningSquares;
     }
     let result = Immutable.Set();
     this.solutionScores.forEach((ss, solutionIndex) => {
-        if(ss.isWin) {
+        if (ss.isWin) {
             let solution = solutionMap.solutions.get(solutionIndex),
                 squares = solution.squares;
             squares.forEach(s => result = result.add(s));
@@ -132,11 +128,11 @@ GameState.prototype.getWinningSquares = function() {
     return result;
 };
 
-GameState.prototype.getSolutionScoreSummary = function()  {
+GameState.prototype.getSolutionScoreSummary = function () {
     let result = {};
     this.solutionScores.forEach(ss => {
         let description = ss.description;
-        if(ss.description) {
+        if (ss.description) {
             let count = result[ss.description] || 0;
             result[ss.description] = count + 1;
         }
@@ -146,13 +142,13 @@ GameState.prototype.getSolutionScoreSummary = function()  {
 
 
 const baseGameState = new GameState({
-    contents:        BoardContents.emptyBoard,
-    solutionScores:  baseSolutionScores,
-    balance:       0,
-    winner:        0
+    contents: BoardContents.emptyBoard,
+    solutionScores: baseSolutionScores,
+    balance: 0,
+    winner: 0
 });
 
 
 GameState.defaultGameState = baseGameState;
 
-module.exports = GameState;
+export {GameState};

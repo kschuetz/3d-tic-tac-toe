@@ -1,5 +1,4 @@
 
-
 /*
  * The MIT License (MIT)
  *
@@ -24,8 +23,7 @@
  * THE SOFTWARE.
  */
 
-const _ = require('lodash');
-
+import _ from "lodash";
 
 function generate(target, xs, ys, zs) {
     for(let xi = 0; xi < 2; xi += 1) {
@@ -63,8 +61,7 @@ const minor = (function() {
     return result;
 })();
 
-
-function generateSquarePreferences() {
+export function generateSquarePreferences() {
     let majorShuffled = _.shuffle(major),
         minorShuffled = _.shuffle(minor),
         combined = majorShuffled.concat(minorShuffled);
@@ -72,7 +69,3 @@ function generateSquarePreferences() {
 
     return combined;
 }
-
-
-
-module.exports = generateSquarePreferences;

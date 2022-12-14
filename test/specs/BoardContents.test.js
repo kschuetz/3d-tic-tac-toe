@@ -1,18 +1,16 @@
-
-const _ = require('lodash'),
-      BoardContents = require('../../src/app/core/BoardContents');
-
+import _ from "lodash";
+import {BoardContents} from "../../src/app/core/BoardContents";
 
 function generateRandom(turnsTaken) {
     let turns = _.shuffle(_.range(0, 63)),
         result = _.map(turns, t => 0);
 
-    if(turnsTaken > 32) {
+    if (turnsTaken > 32) {
         turnsTaken = 32;
     }
     let player = 1,
         i = 0;
-    while(turnsTaken > 0) {
+    while (turnsTaken > 0) {
         result[turns[i]] = player;
         turnsTaken -= 1;
         i += 1;
@@ -25,7 +23,7 @@ function generateRandom(turnsTaken) {
 function createBoard(positions) {
     let result = new BoardContents();
     positions.forEach((player, idx) => {
-        if(player) {
+        if (player) {
             result = result.setPlayerAt(idx, player);
         }
     });
@@ -34,36 +32,36 @@ function createBoard(positions) {
 
 
 function checkBoard(board, positions) {
-    for(let i = 0; i < 63; i += 1) {
+    for (let i = 0; i < 63; i += 1) {
         let player = board.getPlayerAt(i);
-        if(positions[i] !== player) {
+        if (positions[i] !== player) {
             return false;
         }
     }
     return true;
 }
 
-describe('BoardContents', function() {
-    describe('an empty board', function() {
+describe('BoardContents', function () {
+    describe('an empty board', function () {
         let board = new BoardContents();
-        it('has occupied square count of zero', function() {
+        it('has occupied square count of zero', function () {
             expect(board.getOccupiedSquareCount()).to.equal(0);
         });
-        it('all squares return player 0', function() {
-            for(let i = 0; i < 64; i += 1) {
+        it('all squares return player 0', function () {
+            for (let i = 0; i < 64; i += 1) {
                 expect(board.getPlayerAt(i)).to.equal(0);
             }
         });
     });
 
-    describe('a randomly generated board', function() {
-        it('getPlayerAt returns value of setPlayerAt', function() {
-            for(let i = 0; i < 32; i += 1) {
+    describe('a randomly generated board', function () {
+        it('getPlayerAt returns value of setPlayerAt', function () {
+            for (let i = 0; i < 32; i += 1) {
                 let positions = generateRandom(i),
                     board = createBoard(positions),
                     matches = checkBoard(board, positions);
 
-                if(!matches) {
+                if (!matches) {
                     console.error(board.getDebugString());
                     console.error(positions);
                 }
@@ -72,8 +70,8 @@ describe('BoardContents', function() {
             }
         });
 
-        it('serializes and deserializes correctly', function() {
-            for(let i = 0; i < 32; i += 1) {
+        it('serializes and deserializes correctly', function () {
+            for (let i = 0; i < 32; i += 1) {
                 let positions = generateRandom(i),
                     board = createBoard(positions),
                     s1 = board.getDebugString(),

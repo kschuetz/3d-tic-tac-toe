@@ -22,22 +22,19 @@
  * THE SOFTWARE.
  */
 
-const
-    React = require('react'),
-    GameBoard = require('./GameBoard.react');
-
-
-const Playfield = React.createClass({
+import React from "react";
+import {GameBoard} from "./GameBoard.react";
+export const Playfield = React.createClass({
 
     render() {
         const sceneFrameProperties = this.props.sceneFrameProperties;
 
         const
             board = React.createElement(GameBoard, {
-                t:     this.props.t,
+                t: this.props.t,
                 skew: sceneFrameProperties.skew,
-                boardState:  this.props.boardState,
-                onClickSquare:  this.props.onClickSquare
+                boardState: this.props.boardState,
+                onClickSquare: this.props.onClickSquare
             });
 
         const
@@ -50,6 +47,3 @@ const Playfield = React.createClass({
     }
 
 });
-
-
-module.exports = Playfield;

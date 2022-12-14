@@ -25,8 +25,7 @@
 
 /*jshint bitwise: false*/
 
-
-const _ = require('lodash');
+import _ from "lodash";
 
 function BoardContents(data) {
     this.data = data || new Int32Array(4);
@@ -178,4 +177,4 @@ BoardContents.generateRandom = function(turnsTaken) {
 
 };
 
-module.exports = BoardContents;
+export {BoardContents};

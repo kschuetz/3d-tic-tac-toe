@@ -1,5 +1,3 @@
-
-
 /*
  * The MIT License (MIT)
  *
@@ -24,25 +22,17 @@
  * THE SOFTWARE.
  */
 
-const
-    React = require('react'),
-    _ = require('lodash');
-
-
-
-const FlatO = React.createClass({
+import React from 'react';
+export const FlatO = React.createClass({
     render() {
 
         return React.DOM.circle({
             r: 0.34,
-            className:  this.props.className,
+            className: this.props.className,
             transform: this.props.transform,
             strokeWidth: 0.29
         });
 
     }
 
-
 });
-
-module.exports = FlatO;

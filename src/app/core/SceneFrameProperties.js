@@ -22,17 +22,16 @@
  * THE SOFTWARE.
  */
 
-
-const Immutable = require('Immutable');
+import Immutable from "Immutable";
 
 const SceneFrameProperties = Immutable.Record({
     width: 800,
     height: 800,
-    chromeWidth:  200,
+    chromeWidth: 200,
     chromeMargin: 10,
-    skew:  -30
+    skew: -30
 });
 
 SceneFrameProperties.defaultProperties = new SceneFrameProperties();
 
-module.exports = SceneFrameProperties;
+export {SceneFrameProperties};
